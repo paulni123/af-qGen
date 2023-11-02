@@ -1,0 +1,14 @@
+.downloadSection {
+    margin-top: 20px;
+}
+
+.downloadLink {
+    display: block;
+    color: #0070f3;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.downloadLink:hover {
+    text-decoration: underline;
+}

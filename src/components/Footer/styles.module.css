@@ -1,0 +1,14 @@
+.footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footerLink {
+    margin-right: 15px;
+    color: #0070f3;
+    text-decoration: none;
+}
+
+.footerLink:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,11 @@
+.statusSection {
+    margin-top: 20px;
+}
+
+.statusMessage {
+    color: #777;
+}
+
+.progressBar {
+    width: 100%;
+}
