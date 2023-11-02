@@ -1,0 +1,169 @@
+{
+    "data": {
+      "timestamp": "2023-11-02T05:47:41.663Z",
+      "questionCategory": "reading",
+      "questionSubCategory": "scienceFiction",
+      "questionCount": 11,
+      "questionType": "multiple-choice",
+      "format": "pdf"
+    },
+    "message": {
+      "questions": [
+        {
+          "id": "1",
+          "question": "Based on the passage, the narrator can best be described as:",
+          "type": "multiple_choice",
+          "options": [
+            "A. Pompous and uncaring.",
+            "B. Enthralled and starstruck.",
+            "C. Featured and celebrated.",
+            "D. Melancholy and regretful."
+          ],
+          "correct_answer": "D. Melancholy and regretful.",
+          "whyCorrectAnswer": "In lines 30-37, the narrator shares that his loss is 'destroying him,' and he spends his nights 'wandering alone-grieving,' suggesting melancholy and regret.",
+          "difficulty": 2
+        },
+        {
+          "id": "2",
+          "question": "Which statement best describes the symbolic significance of the door in the passage?",
+          "type": "multiple_choice",
+          "options": [
+            "A. The door represents a new opportunity that is waiting to be opened.",
+            "B. The door symbolizes a mysterious, desirable opportunity that has been lost.",
+            "C. The door is a symbol of access to power and success.",
+            "D. The door acts as a symbol of the narrator’s political career."
+          ],
+          "correct_answer": "B. The door symbolizes a mysterious, desirable opportunity that has been lost.",
+          "whyCorrectAnswer": "Lines 21-23 intimate that the door is a losing opportunity for peace and delight that the narrator fails to seize when offered, suggesting it symbolizes a lost, desirable opportunity.",
+          "difficulty": 4
+        },
+        {
+          "id": "3",
+          "question": "The shift in the narrator's mood in the passage is marked by",
+          "type": "multiple_choice",
+          "options": [
+            "A. Choosing to ignore Gurker's remarks.",
+            "B. Rejecting the chance to walk through the door.",
+            "C. Crushing the walnut in his hand.",
+            "D. Recalling his wandering nights."
+          ],
+          "correct_answer": "C. Crushing the walnut in his hand.",
+          "whyCorrectAnswer": "It’s in line 28 where the narrator’s tone transitions from contemplative and undecided to overtly sorrowful and regretful, marked by the crushing of the walnut, which the narrative implies is a symbol of his success.",
+          "difficulty": 4
+        },
+        {
+          "id": "4",
+          "question": "In lines 9-14, 'I passed it' can best be interpreted to mean",
+          "type": "multiple_choice",
+          "options": [
+            "A. the narrator simply walked past by the door.",
+            "B. the narrator missed a moment to see inside the door.",
+            "C. the narrator ignored the door.",
+            "D. the narrator missed an opportunity linked to the door."
+          ],
+          "correct_answer": "D. the narrator missed an opportunity linked to the door.",
+          "whyCorrectAnswer": "Given the context in the entirety of the passage, especially line 32 where the narrator admits to missing a 'nobler motive,' the phrase 'I passed it' can be best interpreted as the narrator missing an opportunity linked to the door.",
+          "difficulty": 3
+        },
+        {
+          "id": "5",
+          "question": "Which choice provides the best evidence for the answer to the previous question?",
+          "type": "multiple_choice",
+          "options": [
+            "A. Lines 13 ('I passed within twenty inches of the door.')",
+            "B. Lines 14 ('If I say good-night to them, and go-in...what will happen?')",
+            "C. Lines 21-22 ('Three times in one year the door has been offered me...')",
+            "D. Lines 32-33 ('My soul is full of inappeasable regrets...')"
+          ],
+          "correct_answer": "D. Lines 32-33 ('My soul is full of inappeasable regrets...')",
+          "whyCorrectAnswer": "Choice (D) is correct because it speaks directly to the fact that the narrator regrets missing out on an opportunity linked to the door.",
+          "difficulty": 3
+        },
+        {
+          "id": "6",
+          "question": "The use of italics in lines 20-21, ‘Here I am!’ he said. 'Here I am', primarily serves to emphasize which of the following?",
+          "type": "multiple_choice",
+          "options": [
+            "A. The speaker's acceptance of his current reality.",
+            "B. The speaker's triumph over his obstacles.",
+            "C. The speaker's rejection of societal expectations.",
+            "D. The speaker’s anticipation of future challenges."
+          ],
+          "correct_answer": "A. The speaker's acceptance of his current reality.",
+          "whyCorrectAnswer": "Given lines 20-21, where the speaker affirms 'Here I am,' it can be perceived that he is claiming acceptance of his reality that he has let an opportunity slip away.",
+          "difficulty": 3
+        },
+        {
+          "id": "7",
+          "question": "The tone of the narrator’s recollection and narration of the events could best be described as:",
+          "type": "multiple_choice",
+          "options": [
+            "A. Optimistic and cheerful.",
+            "B. Nostalgic and bitter.",
+            "C. Envious and resentful.",
+            "D. Melancholy and regretful."
+          ],
+          "correct_answer": "D. Melancholy and regretful.",
+          "whyCorrectAnswer": "Lines 13-14, 21-22, 30-33 all suggest the narrator being filled with sadness and regret for missed opportunities, so the overall tone of the passage is melancholy and regretful.",
+          "difficulty": 2
+        },
+        {
+          "id": "8",
+          "question": "In line 19, 'That weighed with me.' refers to the:",
+          "type": "multiple_choice",
+          "options": [
+            "A. hesitation to disappear suddenly.",
+            "B. anticipation of the public's reaction.",
+            "C. consideration of his political position.",
+            "D. potential danger to his future political career."
+          ],
+          "correct_answer": "A. hesitation to disappear suddenly.",
+          "whyCorrectAnswer": "Given the context in line 18, where the narrator considers vanishing, the statement 'That weighed with me' can be taken to refer to the hesitation to disappear suddenly, suggesting a sense of conflict or indecisiveness.",
+          "difficulty": 3
+        },
+        {
+          "id": "9",
+          "question": "As used in line 21, 'gone' most nearly means",
+          "type": "multiple_choice",
+          "options": [
+            "A. vanished.",
+            "B. deserted.",
+            "C. wasted.",
+            "D. departed."
+          ],
+          "correct_answer": "A. vanished.",
+          "whyCorrectAnswer": "Given the context in line 21, where the door that represented opportunity is no longer available to the speaker, the term 'gone' can be interpreted as vanished.",
+          "difficulty": 2
+        },
+        {
+          "id": "10",
+          "question": "What can be inferred about the narrator's political standing in society?",
+          "type": "multiple_choice",
+          "options": [
+            "A. The narrator is a controversial political figure.",
+            "B. The narrator is a less-known bureaucrat.",
+            "C. The narrator is a prominent politician.",
+            "D. The narrator is a radical political reformer."
+          ],
+          "correct_answer": "C. The narrator is a prominent politician.",
+          "whyCorrectAnswer": "In line 18, the narrator refers to himself as a 'prominent politician' and this suggests that he holds a significant place in the political sphere.",
+          "difficulty": 1
+        },
+        {
+          "id": "11",
+          "question": "The narrator's reference to his 'success' in line 26 can best be described as:",
+          "type": "multiple_choice",
+          "options": [
+            "A. a source of personal fulfillment.",
+            "B. an empty, dissatisfactory achievement.",
+            "C. a dangerous and risky venture.",
+            "D. a rewarding and worthwhile challenge."
+          ],
+          "correct_answer": "B. an empty, dissatisfactory achievement.",
+          "whyCorrectAnswer": "When mentioning his success in line 26, the narrator calls it a 'vulgar, tawdry, irksome, envied thing,' expressing extreme dissatisfaction, hence this implies that his success is an empty, dissatisfactory achievement.",
+          "difficulty": 2
+        }
+      ]
+    },
+    "passage": "(1) .\n(2) .\n(3) Ralphs, I knew, would leave us beyond the Kensington High Street, and then I could surprise Gurker by a sudden frankness.\n(4) One has sometimes to resort to these little devices.\n(5) .\n(6) .\n(7) .\n(8) .\n(9) And then it was that in the margin of my field of vision I became aware once more of the white wall, the green door before us down the road.\n(10) \"We passed it talking.\n(11) I passed it.\n(12) I can still see the shadow of Gurker's marked profile, his opera hat tilted forward over his prominent nose, the many folds of his neck wrap going before my shadow and Ralphs' as we sauntered past.\n(13) \"I passed within twenty inches of the door.\n(14) 'If I say good-night to them, and go in,' I asked myself, 'what will happen?'\n(15) And I was all a-tingle for that word with Gurker.\n(16) \"I could not answer that question in the tangle of my other problems.\n(17) 'They will think me mad,' I thought.\n(18) 'And suppose I vanish now!-Amazing disappearance of a prominent politician!'\n(19) That weighed with me.\n(20) A thousand inconceivably petty worldlinesses weighed with me in that crisis.\"  Then he turned on me with a sorrowful smile, and, speaking slowly; \"Here I am!\" he said.\n(21) \"Here I am.\" he repeated, \"and my chance has gone from me.\n(22) Three times in one year the door has been offered me-the door that goes into peace, into delight, into a beauty beyond dreaming, a kindness no man on earth can know.\n(23) And I have rejected it, Redmond, and it has gone-\"  \"How do you know.\"  \"I know.\n(24) I know.\n(25) I am left now to work it out, to stick to the tasks that held me so strongly when my moments came.\n(26) You say, I have success-this vulgar, tawdry, irksome, envied thing.\n(27) I have it.\" He had a walnut in his big hand.\n(28) \"If that was my success,\" he said, and crushed it, and held it out for me to see.\n(29) \"Let me tell you something, Redmond.\n(30) This loss is destroying me.\n(31) For two months, for ten weeks nearly now, I have done no work at all, except the most necessary and urgent duties.\n(32) My soul is full of inappeasable regrets.\n(33) At nights-when it is less likely I shall be recognised-I go out.\n(34) I wander.\n(35) Yes.\n(36) I wonder what people would think of that if they knew.\n(37) A Cabinet Minister, the responsible head of that most vital of all departments, wandering alone-grieving-sometimes near audibly lamenting-for a door, for a garden.\"  IV  I can see now his rather pallid face, and the unfamiliar sombre fire that had come into his eyes.\n(38) I see him very vividly to-night.\n(39) I sit recalling his words, his tones, and last evening's _Westminster Gazette_ still lies on my sofa, containing the notice of his death.\n(40) At lunch to-day the club was busy with him and the strange riddle of his fate.\n(41) They found his body very early yesterday morning in a deep excavation near East Kensington Station.\n(42) It is one of two shafts that have been made in connection with an extension of the railway southward.\n(43) It is protected from the intrusion of the public by a hoarding upon the high road, in which a small doorway has been cut for the convenience of some of the workmen who live in that direction."
+}
