@@ -210,17 +210,20 @@ export default async function handler(req, res) {
   Ensure that the questions vary in difficulty, from 1 to 5, where 1 is easy and 5 is very difficult, and help challenge prospective test takers.
   I want a format similar to ${newString} and make sure it has the right amount of questions as specified.`;
 
-  const user_content1 = `Given the passage below, generate a suite of 11 SAT reading questions as well as 4-5 answer choices for each question. Return the questions,
-  their answer choices, the correct answer choice, a brief rationale for the correct answer, and an estimated difficulty score for each question. 
+  const user_content1 = `Given the passage below, generate a suite of 11 SAT reading questions as well as 4 answer choices for each question. I want a mixture of medium to hard questions that are somewhat similar to the previous questions.
+  Return the questions, their answer choices, the correct answer choice, a brief rationale for the correct answer, and an estimated difficulty score for each question. 
   There are line numbers in the passage in the form of (x), indicating that line up until the next (x + 1) is the line number x. 
+  If you are referring to line numbers in a question/answer, make sure to use the line number given in the passage. Also make sure the JSON is properly formatted and doesn't have any missing commas.
+  Only use lines from the given passage below please.
   The following represents the entire text of the passage. Passage: ${trainingContent}`;
 
   const assistant_content_1 = JSON.stringify(dataDictTemplate, null, 4);
 
-  const user_content2 = `Given the passage below, generate a suite of 11 SAT reading questions as well as 4-5 answer choices for each question. I want a mixture of medium to hard questions that are somewhat similar to the previous questions.
+  const user_content2 = `Given the passage below, generate a suite of 11 SAT reading questions as well as 4 answer choices for each question. I want a mixture of medium to hard questions that are somewhat similar to the previous questions.
   Return the questions, their answer choices, the correct answer choice, a brief rationale for the correct answer, and an estimated difficulty score for each question. 
   There are line numbers in the passage in the form of (x), indicating that line up until the next (x + 1) is the line number x. 
   If you are referring to line numbers in a question/answer, make sure to use the line number given in the passage. Also make sure the JSON is properly formatted and doesn't have any missing commas.
+  Only use lines from the given passage below please.
   The following represents the entire text of the passage. Passage: ${content}`;
   
 
