@@ -1,7 +1,4 @@
-// pages/api/generateQuestions.js
 
-// Assuming you have a Vercel SDK wrapper for OpenAI's API. If not, you'll have to integrate OpenAI's API manually.
-// The OpenAI example here is a placeholder and might not work directly without an appropriate SDK/wrapper.
 import OpenAI from 'openai'
 import { OpenAIStream, StreamingTextResponse } from 'ai'; // Replace this import with the appropriate SDK or library you're using.
 
@@ -11,17 +8,7 @@ const openai = new OpenAI({
 
 export const runtime = 'edge';
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).end();
-  }
-
-  
-//   console.log(await req.json())
-  const temp = await req.json();
-  const content = temp.content;
-  console.log(content)
-
+export async function generateQuestions(content) {
 
   const trainingContent = `
   (1) Sir Andrew's face had become almost transfigured.
@@ -248,6 +235,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error("An error occurred:", error);
-    res.status(500).json({ error: "An error occurred while generating the question" });
+    throw error;
   }
 }

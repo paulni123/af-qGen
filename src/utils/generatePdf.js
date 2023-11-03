@@ -1,14 +1,7 @@
 import puppeteer from 'puppeteer';
-import fs from 'fs';
-import path from 'path';
 
-export default async (req, res) => {
-  if (req.method !== "POST") {
-    return res.status(405).end();
-  }
-
-  const { data, message, passage } = req.body;
-  const passageLines = passage.split(/(?=\(\d+\))/);
+export async function generatePdf(content, questions) {
+  const passageLines = content.split(/(?=\(\d+\))/);
 
   let htmlContent = `
     <style>
@@ -42,7 +35,7 @@ export default async (req, res) => {
       <div class="page-break"></div>
   `;
   
-  message.questions.forEach((question, index) => {
+  questions.forEach((question, index) => {
     htmlContent += `
       <div class="question">
         <b>Q${index + 1}: ${question.question}</b>
@@ -79,10 +72,5 @@ export default async (req, res) => {
 
   await browser.close();
 
-  const localFilePath = path.join(process.cwd(), 'public', 'sat_reading_test.pdf');
-  fs.writeFileSync(localFilePath, pdfBuffer);
-
-  res.setHeader("Content-Disposition", "attachment; filename=sat_reading_test.pdf");
-  res.setHeader("Content-Type", "application/pdf");
-  res.end(pdfBuffer);
+  return pdfBuffer;
 };

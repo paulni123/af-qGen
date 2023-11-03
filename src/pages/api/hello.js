@@ -1,6 +1,9 @@
 import AWS from 'aws-sdk';
 import fs from 'fs';
 import path from 'path';
+import { generateQuestions } from '../../utils/generateQuestions';
+import { getRandomDocument } from '../../utils/getRandomDocument';
+import { generatePdf } from '../../utils/generatePdf';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -10,35 +13,25 @@ export default async function handler(req, res) {
   const body = req.body;
   const { timestamp, questionCategory, questionSubCategory, questionCount, questionType, format } = body;
 
-  const response = await fetch(`http://localhost:3000/api/getRandomDocument?category=${questionSubCategory}`);
-  const data = await response.json();
-  const passageText = data.text;
+  const document = await getRandomDocument(questionSubCategory);
+  const passageText = document.text;
 
   let result;
 
   switch (questionCategory) {
     case 'reading':
       try {
-        const fetchResponse = await fetch('http://localhost:3000/api/generateQuestions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ content: passageText }),
-        });
-
-        if (!fetchResponse.ok) {
-          console.error('API call failed:', fetchResponse.statusText);
-          return res.status(fetchResponse.status).send({ message: 'API call failed.' });
-        }
+        // Call the generateQuestions function to get a StreamingTextResponse
+        const streamingResponse = await generateQuestions(passageText);
 
         let chunks = '';
-        const reader = fetchResponse.body.getReader();
+        const reader = streamingResponse.body.getReader();
         const readNextChunk = async () => {
           const { done, value } = await reader.read();
           if (done) {
             try {
               result = JSON.parse(chunks);
+              console.log(result)
             } catch (error) {
               console.error('Failed to parse JSON', error);
               return res.status(500).json({ message: 'Failed to parse response.' });
@@ -71,23 +64,17 @@ export default async function handler(req, res) {
   }
 
   try {
-    const pdfResponse = await fetch('http://localhost:3000/api/generatePdf', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ data: body, message: result, passage: passageText }),
-    });
+    const pdfBuffer = await generatePdf(passageText, result.questions);
 
-    if (!pdfResponse.ok) {
-      console.error('PDF generation failed:', pdfResponse.statusText);
-      return res.status(pdfResponse.status).send({ message: 'PDF generation failed.' });
-    }
+    const localFilePath = path.join(process.cwd(), 'public', 'sat_reading_test.pdf');
+    fs.writeFileSync(localFilePath, pdfBuffer);
 
   } catch (error) {
-    console.error('Error while generating PDF:', error);
-    return res.status(500).send({ message: 'Internal server error during PDF generation.' });
+    console.error('Error generating PDF:', error);
+    res.status(500).json({ error: 'Error generating PDF' });
   }
+
+  console.log("Generated the PDF")
 
   AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -102,12 +89,15 @@ export default async function handler(req, res) {
 
   try {
     const pdfFile = await fs.promises.readFile(pdfFilePath);
+    console.log("Successfully read the file")
     await s3.putObject({
       Bucket: process.env.PDF_BUCKET_NAME,
       Key: pdfFilename,
       Body: pdfFile,
       ContentType: 'application/pdf',
     }).promise();
+
+    console.log("put PDF in S3 bucket")
 
     res.status(200).json({
       body_data: body,
