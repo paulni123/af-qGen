@@ -1,9 +1,9 @@
 import { MongoClient } from 'mongodb';
 
 const dbName = process.env.MONGO_DB_NAME;
-const username = encodeURIComponent(process.env.MONGO_DB_USERNAME);
-const password = encodeURIComponent(process.env.MONGO_DB_PASSWORD);
-const URI = process.env.MONGODB_URI;
+const username = process.env.MONGO_DB_USERNAME;
+const password = process.env.MONGO_DB_PASSWORD;
+const URI = `mongodb+srv://${username}:${password}@afqgen.fj5fz10.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
 let cachedDb = null;
 
