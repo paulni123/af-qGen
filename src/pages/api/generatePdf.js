@@ -8,6 +8,7 @@ export default async (req, res) => {
   }
 
   const { data, message, passage } = req.body;
+  const category = data.category;
   const passageLines = passage.split(/(?=\(\d+\))/);
 
   let htmlContent = `
@@ -16,7 +17,7 @@ export default async (req, res) => {
         margin-top: 60px;
         margin-bottom: 40px;
         @top-center {
-          content: "SAT Reading Test";
+          content: "SAT ${category} Test";
           font-family: 'Arial';
           font-size: 24px; 
           font-weight: bold;
@@ -41,7 +42,7 @@ export default async (req, res) => {
       </div>
       <div class="page-break"></div>
   `;
-  
+
   message.questions.forEach((question, index) => {
     htmlContent += `
       <div class="question">
@@ -57,9 +58,15 @@ export default async (req, res) => {
 
   htmlContent += `</div>`;
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+    ]
+  });
   const page = await browser.newPage();
-  
+
   await page.setContent(htmlContent);
 
   const pdfBuffer = await page.pdf({
