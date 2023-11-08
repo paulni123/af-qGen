@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 
-export async function generatePdf(content, questions) {
+export async function generatePdf(content, questions, subject) {
   const passageLines = content.split(/(?=\(\d+\))/);
 
   let htmlContent = `
@@ -9,7 +9,7 @@ export async function generatePdf(content, questions) {
         margin-top: 60px;
         margin-bottom: 40px;
         @top-center {
-          content: "SAT Reading Test";
+          content: "SAT ${subject} Test";
           font-family: 'Arial';
           font-size: 24px; 
           font-weight: bold;
@@ -34,7 +34,7 @@ export async function generatePdf(content, questions) {
       </div>
       <div class="page-break"></div>
   `;
-  
+
   questions.forEach((question, index) => {
     htmlContent += `
       <div class="question">
@@ -50,9 +50,15 @@ export async function generatePdf(content, questions) {
 
   htmlContent += `</div>`;
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+    ]
+  });
   const page = await browser.newPage();
-  
+
   await page.setContent(htmlContent);
 
   const pdfBuffer = await page.pdf({
@@ -60,7 +66,7 @@ export async function generatePdf(content, questions) {
     displayHeaderFooter: true,
     headerTemplate: `
       <div style="font-size: 24px; font-weight: bold; text-align: center; width: 100%;">
-        SAT Reading Test
+        SAT ${subject} Test
       </div>
     `,
     footerTemplate: `

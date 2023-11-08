@@ -2,6 +2,7 @@ import AWS from 'aws-sdk';
 import fs from 'fs';
 import path from 'path';
 import { generateQuestions } from '../../utils/generateQuestions';
+import { generateMathQuestions } from '../../utils/generateMathQuestions';
 import { getRandomDocument } from '../../utils/getRandomDocument';
 import { generatePdf } from '../../utils/generatePdf';
 
@@ -12,17 +13,18 @@ export default async function handler(req, res) {
 
   const body = req.body;
   const { timestamp, questionCategory, questionSubCategory, questionCount, questionType, format } = body;
-
-  const document = await getRandomDocument(questionSubCategory);
-  const passageText = document.text;
+  console.log(JSON.stringify(body));
 
   let result;
+  let passageText = "";
 
   switch (questionCategory) {
     case 'reading':
       try {
         // Call the generateQuestions function to get a StreamingTextResponse
         const streamingResponse = await generateQuestions(passageText);
+        const document = await getRandomDocument(questionSubCategory);
+        passageText = document.text;
 
         let chunks = '';
         const reader = streamingResponse.body.getReader();
@@ -53,7 +55,34 @@ export default async function handler(req, res) {
       result = { success: true, message: 'Placeholder' };
       break;
     case 'math':
-      result = { success: true, message: 'Placeholder' };
+      try {
+        // Call the generateQuestions function to get a StreamingTextResponse
+        const streamingResponse = await generateMathQuestions(questionCount);
+
+
+        let chunks = '';
+        const reader = streamingResponse.body.getReader();
+        const readNextChunk = async () => {
+          const { done, value } = await reader.read();
+          if (done) {
+            try {
+              result = JSON.parse(chunks);
+              console.log(result)
+            } catch (error) {
+              console.error('Failed to parse JSON', error);
+              return res.status(500).json({ message: 'Failed to parse response.' });
+            }
+          } else {
+            chunks += new TextDecoder().decode(value);
+            await readNextChunk();
+          }
+        };
+        await readNextChunk();
+
+      } catch (error) {
+        console.error('Error while fetching:', error);
+        return res.status(500).send({ message: 'Internal server error.' });
+      }
       break;
     default:
       break;
@@ -64,9 +93,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    const pdfBuffer = await generatePdf(passageText, result.questions);
+    const pdfBuffer = await generatePdf(passageText, result.questions, questionCategory);
 
-    const localFilePath = path.join(process.cwd(), 'public', 'sat_reading_test.pdf');
+    const localFilePath = path.join(process.cwd(), 'public', `sat_${questionCategory}_test.pdf`);
     fs.writeFileSync(localFilePath, pdfBuffer);
 
   } catch (error) {
@@ -83,8 +112,8 @@ export default async function handler(req, res) {
   });
 
   const s3 = new AWS.S3();
-  const pdfFilename = "sat_reading_test.pdf";
-  const pdfFilePath = path.join(process.cwd(), 'public', 'sat_reading_test.pdf');
+  const pdfFilename = `sat_${questionCategory}_test.pdf`;
+  const pdfFilePath = path.join(process.cwd(), 'public', `sat_${questionCategory}_test.pdf`);
   const pdfUrl = `https://qgenbucket.s3.us-east-2.amazonaws.com/${pdfFilename}`;
 
   try {
