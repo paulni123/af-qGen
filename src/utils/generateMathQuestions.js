@@ -13,6 +13,8 @@ const topicMapper = {
     "heartOfAlgebra": ["Solving linear equations and linear inequalities", "Interpreting linear functions", "Linear Equation Word Problems", "Linear Inequality Word Problems",
         "Graphing Linear Equations", "Linear Function Word Problems", "Systems of linear inequalities word problems", "Solving Systems of Linear Equations", "System of Linear Equations Word Problems"],
     "passportToAdvancedMath": ["Solving Quadratic Equations", "Interpreting nonlinear expressions", "Quadratic and Exponential Word Problems", "Manipulating quadratic and exponential expressions", "Radical and rational expressions", "Radical and rational equations", "Operations with rational expressions", "Operations With Polynomials", "Polynomial Factors and Graphs", "Non-Linear Equation Graphs", "Linear and Quadratic Systems", "Structure in expressions", "Isolating Quantities", "Function Notation"],
+    "problemSolvingAndDataAnalysis": ["Ratios, rates, and proportions", "Percents", "Units", "Table Data", "Scatterplots", "Key features of graphs", "Linear and exponential growth", "Data inferences", "Center, spread, and shape of distributions", "Data collection and conclusions"],
+    "additionalTopicsInMath": ["Volume word problems", "Right triangle word problems", "Congruence and similarity", "Right triangle trigonometry", "Angles, arc lengths, and trig functions", "Circle Theorems", "Circle equations", "Complex Numbers"]
 }
 
 const heartOfAlgebraMapper = {
@@ -172,6 +174,117 @@ const passportToAdvancedMathMapper = {
         "A function f satisfies f(1)=3 and f(3)=7. A function g satisfies g(3)=9 and g(7)=1. What is the value of f(g(7))? A) 1, B) 3, C) 7, D) 9",
         "The functions f and g are defined as f(x) = 1/(x-1) and g(x) = 5x+8. What is the value of f(g(-1))?",
         "If h(x) = x^3 - 4x + 3, what is the value of h(h(2))?"
+    ]
+};
+
+const problemSolvingAndDataAnalysisMapper = {
+    "Ratios rates and proportions": [
+        "Elena is conducting a study about the effects of toxins in the water on the hormones of fish. Elena surveys 350 male fish in a river and finds that 150 of the male fish have egg cells growing inside them. According to Elena's survey, what is the ratio of male fish with egg cells to male fish without egg cells in the river? Choose 1 answer: a) 3:4, b) 3:7, c) 4:5, d) 4:7",
+        "A geneticist conducts a study to investigate the prevalence of a certain genetic marker in a population of US adults. Out of 1,000 randomly selected adults, 350 have the genetic marker. What is the ratio of adults with the genetic marker to those without? (A) 7:13 (B) 13:7 (C) 7:20 (D) 13:20",
+        `What is the musical interval name when the frequency ratio is 480 Hz to 800 Hz? Given intervals: a. Major third (4:5), b. Perfect fourth (3:4), c. Perfect fifth (2:3), d. Major sixth (3:5)`,
+        "A piece of wood has a mass of 30g and a volume of 40cm^3. A second piece of wood has the same density and a volume of 240cm^3. What is the mass, in grams, of the second piece of wood?"
+    ],
+    "Percents": [
+        `If 8 men make up 40% of a construction crew, how many people are in the entire crew?`,
+        "If 780 W/m^2 of light strike the roof of a greenhouse with 85% transmittance, how many W/m^2 pass through the roof?",
+        "If a sample of avocado flesh weighs 10g before dehydration and 1.8g after, what is the percent of dry matter in the sample?",
+        "If a bank has $222 million in expenses and an efficiency ratio of 75%, what is its revenue in millions of dollars?",
+        "If 18 vanilla cupcakes made by a baker are 17% of the total cupcakes made, how many total cupcakes were made on Wednesday?"
+    ],
+    "Units": [
+        "The Shanghai maglev train travels at a speed of 431 kilometers per hour. Approximately what is the train's speed in miles per hour? (1 mile ≈ 1.61 kilometers) Choose 1 answer: A) 268 B) 370 C) 431 D) 694",
+        "Lilia wants to exchange US dollars for Euros before traveling to France. Her bank offers her an exchange rate of 1 US dollar to 0.84 Euros. Approximately how many US dollars does Lilia need to exchange if she wants to receive 350 Euros from her bank? Choose 1 answer: A) 266 B) 294 C) 417 D) 434",
+        "A shipping route from Los Angeles to Honolulu is 1,946 nautical miles long. Approximately how long is the route in miles? (1 nautical mile ≈ 1.15 miles) Choose 1 answer: A) 1,692 B) 1,946 C) 2,061 D) 2,238",
+        "Petra waited in line for 78 minutes for tickets to see her favorite band. How long did she wait in hours? Choose 1 answer: A) 0.8 B) 1.1 C) 1.3 D) 1.5",
+        "Grant and Tim made 8.2 gallons of chili. About how many liters of chili did they make? (1 gallon ≈ 3.785 liters) Choose 1 answer: A) 31 B) 12 C) 4.4 D) 3.8"
+    ],
+    "Table Data": [
+
+    ],
+    "Scatterplots": [
+
+    ],
+    "Key features of graphs": [
+
+    ],
+    "Linear and exponential growth": [
+
+    ],
+    "Data inferences": [
+        "A study of 120,000 randomly selected photos posted to a social media site determined that 4% were 'selfies,' photos of oneself. If the percent of selfies is consistent throughout the rest of the photos on the site, and there are 20 billion photos, how many billions of photos on the site are selfies?",
+        `Sicilia randomly selected 25% of the Sound Sleep email subscribers and asked them how many hours of sleep they average each night. Of the subscribers surveyed, 16 average less than 6 hours of sleep each night. Based on the data, what is the most reasonable estimate of the number of Sound Sleep email subscribers who average less than 6 hours of sleep? Choose 1 answer: A) 16, B) 48, C) 64, D) 400`,
+        `Ronald Fast Food randomly selected 20% of locations and asked the manager about the most popular meat. Of the locations surveyed, beef is the most popular meat at 4 locations. Based on the data, what is the most reasonable estimate of the number of Ronald Fast Food locations where the most popular meat is beef? Choose 1 answer: A) 4, B) 12, C) 16, D) 20`,
+        `Bernard randomly selected 10% of St. Francis citizens and asked them about their favorite coffee shop. Of the citizens surveyed, 7 said that Energize was their favorite coffee shop. Based on the data, what is the most reasonable estimate of the number of St. Francis citizens whose favorite coffee shop is Energize? Choose 1 answer: A) 7, B) 10, C) 63, D) 70`,
+        `Arnaud randomly selected 30% of French International Studies students and asked them if they know how to speak French. Of the students surveyed, 33 know how to speak French. Based on the data, what is the most reasonable estimate of the number of French International Studies students who know how to speak French? Choose 1 answer: A) 10, B) 33, C) 110, D) 231`
+    ],
+    "Center, spread, and shape of distributions": [
+
+    ],
+    "Data collection and conclusions": [
+        "City Councilwoman Kelly wants to know whether the residents of her district support a proposed school redistricting plan. Which of the following survey methods will allow Councilwoman Kelly to make a valid conclusion about whether residents of her district support the proposed plan? Choose 1 answer: A) Ask her neighbors. B) Ask the residents of Whispering Pines Retirement Community. C) Ask 200 residents of her district whose names are chosen at random. D) Ask a group of parents at the local playground.",
+        "A school district wants to conduct a sample survey to determine the average number of sports played by high school seniors in the district. Which of the following survey methods is most likely to produce valid results? Choose 1 answer: A) The district surveys 500 randomly selected high school seniors in the district who play baseball. B) The district surveys every tenth student to enter the football stadium at the district championship game. C) The district surveys 500 randomly selected high school seniors in the district. D) The district selects one high school in the district and surveys all of its students.",
+        "A local package delivery service wants to improve the efficiency of its deliveries. As a first step, the management team decides to conduct a study to determine the average length of time from the arrival of a package at the company's mail center until its delivery at a home. Which of the following methods is most likely to produce valid results? Choose 1 answer: A) The team selects the 1,000 heaviest packages in a one-week, non-holiday period and records how long it takes for each package to reach its destination. B) The team calls 1,000 residents in their delivery area and asks them whether they have received a package from their service in the past week. They will then record how long it took for those packages to reach their destination. C) The team selects a random sample of 1,000 packages arriving at the center over a one-week, non-holiday period and records how long it takes for each package to reach its destination. D) None of the above.",
+        "A writer for a high school newspaper is conducting a survey to estimate the number of students that will vote for a particular candidate in an upcoming student government election. All students at the high school are eligible to vote in the election, and the writer decides to select a sample of students to take the survey. Which of the following sampling methods is most likely to produce valid results? Choose 1 answer: A) Survey every fifth student to enter the school library. B) Survey every fifth student to arrive at school one morning. C) Survey every fifth senior to arrive at school one morning. D) Survey every fifth student to enter the school stadium for a football game.",
+        "A school district has 40 schools located in different neighborhoods of City Y. A researcher for the school district believes that teacher job satisfaction varies greatly from school to school. Which of the following sampling methods is most appropriate to estimate the proportion of all teachers in the school district who are satisfied with their jobs? Choose 1 answer: A) Surveying the 50 teachers who have taught for the school district the longest. B) Using the first 50 responses from an optional online survey for the teachers. C) Selecting one of the 40 schools at random and then surveying each teacher at the school. D) Selecting 5 teachers from each school at random and then surveying each teacher selected.",
+    ]
+};
+
+const additionalTopicsInMathMapper = {
+    "Volume word problems": [
+        "Cam is making a party hat in the shape of a cone for his birthday. The circumference of the part of his head where the hat will rest is 56 cm. If the height of the hat is 25 cm, which of the following is closest to the volume of Cam's hat, measured in cubic centimeters (cm^3)? Choose 1 answer: A) 233 cm^3, B) 2,080 cm^3, C) 16,362 cm^3, D) 20,525 cm^3",
+        "A die is created by smoothing the corners of a plastic cube and carving indented pips. The original cube had an edge length of 2 cm. The volume of the final die is 7.5 cm^3. What is the volume of the waste generated by creating the die from the cube in cm^3?",
+        "Let's Scream for Ice Cream serves 3 scoops of ice cream in its signature cone. Each scoop is a sphere with a radius of 4 centimeters. To the nearest cubic centimeter, what is the total volume of ice cream served per cone?",
+        "A multi-layer cake is in the shape of a right cylinder. The height of the cake is 20 cm, and its radius is 10 cm. If each of the cake layers has a volume of approximately 1,250 cubic centimeters, then how many layers does the cake have?",
+        "A paint can in the shape of a right circular cylinder has a height of 20 cm and the circumference of the base of the can is 43.96 cm. To the nearest ten cubic centimeters, what is the approximate volume of the paint can? Choose 1 answer: A) 2,760 cm^3, B) 3,080 cm^3, C) 30,340 cm^3, D) 121,360 cm^3",
+    ],
+    "Right triangle word problems": [
+        "Wanahton is cooking a breadstick on a rectangular baking sheet measuring 9 1/2 inches by 13 inches. Assuming the breadstick width is negligible, what is the longest breadstick Wanahton could bake by fitting it straight along the diagonal and within the baking sheet to the nearest inch? Choose 1 answer: A) 13 in, B) 16 in, C) 124 in, D) 259 in",
+        "Due to weather, a barge captain decides to reach her destination in two legs: one due north and one due west. Without a diagram, if the direct route to her destination is about 1,830 miles and after traveling 605 miles due north the captain determines it is time to head due west, how many more miles are left in the trip? (Round the answer to the nearest mile.)",
+        "Bilal is assembling a set of bunkbeds and wants to make sure the support posts are perpendicular to the floor. He measures that the posts are 165 cm tall and 220 cm apart. How long should the diagonal measurement be, in cm, if the support posts are perpendicular to the floor? Choose 1 answer: A) 75 cm, B) 130 cm, C) 275 cm, D) 385 cm",
+        "A pencil ladder is a compact ladder that firefighters can use in tight spaces. To the nearest foot, what is the height h, in feet, for a pencil ladder that is 11 ft long when its base is 4.5 ft from the supporting wall?",
+        "Kaizen's rectangular computer monitor has a diagonal length of 19 inches. If the height of the monitor is 11.9 inches, which of the following is closest to the width of the monitor in inches? Choose 1 answer: A) 7.1, B) 14.8, C) 15.5, D) 22.4"
+    ],
+    "Congruence and similarity": [
+        "Consider two triangles, triangle ABC and triangle BCD, which share a common side BC. The lengths of sides AB and CD are equal, and the lengths of sides AC and BD are also equal. If angle ACB in triangle ABC measures 55 degrees, what is the value of angle x in triangle BCD, which corresponds to angle ACB? Determine the value of x.",
+        "Triangle ABC and triangle BCD share a common side BC. The lengths of sides AB and CD are equal, as are the lengths of sides AC and BD. Given these equalities, consider the relationship between triangles ABC and BCD. If angle BAC in triangle ABC measures 92 degrees, what is the value of angle x in triangle BCD, which corresponds to angle BAC when the two triangles are compared? Determine the value of x.",
+        "Triangle MNO and triangle PQR are on a plane. Side MN is equal to side PQ, side NO is equal to side QR, and side MO is equal to side PR. If angle MNO measures 75 degrees, what is the measure of angle PQR?",
+        "Two triangles, ABC and DEF, have the following properties: AB is congruent to DE, angle BAC is congruent to angle EDF, and AC is congruent to DF. If angle ABC measures 60 degrees, what is the measure of angle DEF?",
+        "In a geometric diagram, triangles XYZ and LMN have two pairs of equal sides: XY is equal to LM, and XZ is equal to LN. Also, angle XYZ is equal to angle LMN. If the length of side YZ is 10 cm, what is the length of side MN?"
+    ],
+    "Right triangle trigonometry": [
+        "In a scenario involving two similar triangles, LMN and PQR, if tan(P) = 5/12, what is the value of tan(L)? Choose 1 answer: A) 5/6, B) 5/12, C) 5/13, D) 5/16",
+        "In a scenario where triangles RST and XYZ are similar right triangles, which of the following is equal to cos(X)? Choose 1 answer: A) RS/RT, B) ST/RS, C) RS/ST, D) RT/ST",
+        "In a scenario where triangles ABC and DEF are similar right triangles, which of the following is equal to tan(C)? Choose 1 answer: A) AB/DE, B) EF/AB, C) DF/DE, D) EF/DE",
+        "In a scenario where triangles LMN and PQR are similar, if cos(Q) = 0.3 in triangle PQR, what is the value of cos(M) in triangle LMN?",
+        "In triangle ABC, the measure of angle A is 90 degrees, AB = 10, and BC = 16. Triangle DEF is similar to triangle ABC, where vertices D, E, and F correspond to vertices A, B, and C, respectively, and each side of triangle DEF is 2 times the length of the corresponding side of triangle ABC. What is the value of sin(F)?"
+    ],
+    "Angles, arc lengths, and trig functions": [
+        "If theta equals 4 pi over 9 radians, what is the value of theta in degrees? Choose 1 answer: A) 20 degrees, B) 36 degrees, C) 80 degrees, D) 720 degrees",
+        "If theta equals 240 degrees, what is the value of theta in radians? Choose 1 answer: A) 2/3 pi, B) 7/6 pi, C) 4/3 pi, D) 3/2 pi",
+        "Which of the following radian measures is equal to 135 degrees? Choose 1 answer: A) pi/4 radians, B) pi/2 radians, C) 3 pi/4 radians, D) pi radians",
+        "Which of the following radian measures is equal to 30 degrees? Choose 1 answer: A) pi/3 radians, B) pi/6 radians, C) pi/8 radians, D) pi radians",
+        "Which of the following radian measures is equal to 300 degrees? Choose 1 answer: A) 2 pi/3 radians, B) 4 pi/3 radians, C) 5 pi/3 radians, D) 7 pi/3 radians"
+    ],
+    "Circle Theorems": [
+        "A circle has an area of 36 pi square units. A sector in this circle has a central angle of 48 degrees. What is the area of this sector? Choose 1 answer: A) 5/24 pi, B) 1/270 pi, C) 270 pi, D) 5/24 pi",
+        "A circle has a sector with an area of 24/5 pi square units and a central angle of 192 degrees. What is the area of the circle? Choose 1 answer: A) 1/9 pi, B) 9 pi, C) 75/192 pi, D) 192/75 pi",
+        "A circle has a sector with an area of 15 pi square units and a central angle of 216 degrees. What is the area of the circle? Choose 1 answer: A) 1/9 pi, B) 9 pi, C) 1/25 pi, D) 25 pi",
+        "A circle with radius 3 units has a sector with a central angle of 160 degrees. What is the area of the sector? Choose 1 answer: A) 1/4 pi, B) 4/81 pi, C) 4 pi, D) 81/4 pi",
+        "A circle with area 81 pi square units has a sector with a central angle of 120 degrees. What is the area of the sector? Choose 1 answer: A) 1/243 pi, B) 1/27 pi, C) 27 pi, D) 243 pi"
+    ],
+    "Circle equations": [
+        "A circle in the xy-plane has its center at (44, -34) and radius sqrt(3). Which of the following is an equation of the circle? Choose 1 answer: A) (x + 34)^2 + (y - 44)^2 = 3, B) (x + 34)^2 + (y - 44)^2 = sqrt(3), C) (x - 44)^2 + (y + 34)^2 = 3, D) (x - 44)^2 + (y + 34)^2 = sqrt(3)",
+        "A circle in the xy-plane has its center at (-2/3, -3/4) and radius 5. Which of the following is an equation of the circle? Choose 1 answer: A) (x + 2/3)^2 + (y + 3/4)^2 = 5, B) (x - 2/3)^2 + (y + 3/4)^2 = 25, C) (x + 2/3)^2 + (y - 3/4)^2 = 25, D) (x + 2/3)^2 + (y + 3/4)^2 = 25",
+        "A circle in the xy-plane has a center at (-12, 15) and a radius of 9 units. Which of the following is an equation of the circle? Choose 1 answer: A) (x - 12)^2 + (y + 15)^2 = 9, B) (x + 12)^2 + (y - 15)^2 = 9, C) (x - 12)^2 + (y + 15)^2 = 81, D) (x + 12)^2 + (y - 15)^2 = 81",
+        "A circle in the xy-plane has a center at (-7, -6) and a radius of √13 units. Which of the following is an equation of the circle? Choose 1 answer: A) (x + 7)^2 + (y + 6)^2 = 13, B) (x + 7)^2 + (y + 6)^2 = √13, C) (x - 7)^2 + (y - 6)^2 = 13, D) (x - 7)^2 + (y - 6)^2 = √13",
+        "A circle in the xy-plane has a center at (5/8, -6/5) and a diameter of 7/10. Which of the following is an equation of the circle? Choose 1 answer: A) (x + 5/8)^2 + (y - 6/5)^2 = 49/100, B) (x + 5/8)^2 + (y + 6/5)^2 = 49/400, C) (x - 5/8)^2 + (y + 6/5)^2 = 49/100, D) (x - 5/8)^2 + (y - 6/5)^2 = 49/400"
+    ],
+    "Complex numbers": [
+        "For √(-1) = -1i, what is the sum of (3 + √(-1)) + i and (5 + 4√(-1)) + 4i? Choose 1 answer: A) 13, B) 13√13i, C) 8 + 5√8+5i, D) 15 + 4√15+4i",
+        "Which of the following is equal to (7+3√(-1)) - (4+√(-1))? Choose 1 answer: A) 5, B) 5√5i, C) 3+2√3+2i, D) 3+4√3+4i",
+        "What is the sum of the complex numbers 2 + 4√(-1) + 4i and 3 - 7√(-1) - 7i, where √(-1) = -1√(-1) = -1√(-1) = -1i, equals, square root of, minus, 1, end square root? Choose 1 answer: A) 5 - 3i B) 5 + 11i C) 6 - 28i D) 6 - 3i",
+        "For i = √(-1), which of the following is equal to (-3 + 2i) + (-7 + 8i)?",
+        "Which of the following complex numbers is equal to (7 - 2i) - (5 - 9i) for i = √(-1)?"
     ]
 };
 
@@ -351,7 +464,7 @@ export async function generateMathQuestions(questionCount) {
 
     const assistant_content_1 = JSON.stringify(dataDictTemplate, null, 4);
 
-    const user_content2 = `Given the category: ${"Solving Quadratic Equations"}, generate a suite of 11 SAT Math questions as well as 4 answer choices for each question. Return the questions,
+    const user_content2 = `Given the category: ${"Solving Quadratic Equations"}, generate a suite of ${questionCount} SAT Math questions as well as 4 answer choices for each question. Return the questions,
     their answer choices, the correct answer choice, a brief rationale for the correct answer, and an estimated difficulty score for each question. 
     The following represents a list of sample questions from the above category that you can use to generate new questions from: ${passportToAdvancedMathMapper["Solving Quadratic Equations"]}. Make the questions significantly harder than the list of sample questions`
 
