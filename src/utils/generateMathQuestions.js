@@ -1,21 +1,16 @@
-// pages/api/generateQuestions.js
-
-// Assuming you have a Vercel SDK wrapper for OpenAI's API. If not, you'll have to integrate OpenAI's API manually.
-// The OpenAI example here is a placeholder and might not work directly without an appropriate SDK/wrapper.
-import OpenAI from 'openai'
 import { OpenAIStream, StreamingTextResponse } from 'ai'; // Replace this import with the appropriate SDK or library you're using.
-
+import OpenAI from 'openai';
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_KEY
 });
 
-const topicMapper = {
-    "heartOfAlgebra": ["Solving linear equations and linear inequalities", "Interpreting linear functions", "Linear Equation Word Problems", "Linear Inequality Word Problems",
-        "Graphing Linear Equations", "Linear Function Word Problems", "Systems of linear inequalities word problems", "Solving Systems of Linear Equations", "System of Linear Equations Word Problems"],
-    "passportToAdvancedMath": ["Solving Quadratic Equations", "Interpreting nonlinear expressions", "Quadratic and Exponential Word Problems", "Manipulating quadratic and exponential expressions", "Radical and rational expressions", "Radical and rational equations", "Operations with rational expressions", "Operations With Polynomials", "Polynomial Factors and Graphs", "Non-Linear Equation Graphs", "Linear and Quadratic Systems", "Structure in expressions", "Isolating Quantities", "Function Notation"],
-    "problemSolvingAndDataAnalysis": ["Ratios, rates, and proportions", "Percents", "Units", "Table Data", "Scatterplots", "Key features of graphs", "Linear and exponential growth", "Data inferences", "Center, spread, and shape of distributions", "Data collection and conclusions"],
-    "additionalTopicsInMath": ["Volume word problems", "Right triangle word problems", "Congruence and similarity", "Right triangle trigonometry", "Angles, arc lengths, and trig functions", "Circle Theorems", "Circle equations", "Complex Numbers"]
-}
+// const topicMapper = {
+//     "heartOfAlgebra": ["Solving linear equations and linear inequalities", "Interpreting linear functions", "Linear Equation Word Problems", "Linear Inequality Word Problems",
+//         "Graphing Linear Equations", "Linear Function Word Problems", "Systems of linear inequalities word problems", "Solving Systems of Linear Equations", "System of Linear Equations Word Problems"],
+//     "passportToAdvancedMath": ["Solving Quadratic Equations", "Interpreting nonlinear expressions", "Quadratic and Exponential Word Problems", "Manipulating quadratic and exponential expressions", "Radical and rational expressions", "Radical and rational equations", "Operations with rational expressions", "Operations With Polynomials", "Polynomial Factors and Graphs", "Non-Linear Equation Graphs", "Linear and Quadratic Systems", "Structure in expressions", "Isolating Quantities", "Function Notation"],
+//     "problemSolvingAndDataAnalysis": ["Ratios, rates, and proportions", "Percents", "Units", "Table Data", "Scatterplots", "Key features of graphs", "Linear and exponential growth", "Data inferences", "Center, spread, and shape of distributions", "Data collection and conclusions"],
+//     "additionalTopicsInMath": ["Volume word problems", "Right triangle word problems", "Congruence and similarity", "Right triangle trigonometry", "Angles, arc lengths, and trig functions", "Circle Theorems", "Circle equations", "Complex Numbers"]
+// }
 
 const heartOfAlgebraMapper = {
     "Solving linear equations and linear inequalities": ['j/2 + 7 = 12. What is the value of j in the equation shown above?', 'k/4 + 3 = 14. What is the value of k in the equation shown above?',
@@ -288,9 +283,16 @@ const additionalTopicsInMathMapper = {
     ]
 };
 
+const topicMapper = {
+    "heartOfAlgebra": heartOfAlgebraMapper,
+    "passportToAdvancedMath": passportToAdvancedMathMapper,
+    "problemSolvingAndDataAnalysis": problemSolvingAndDataAnalysisMapper,
+    "additionalTopicsInMath": additionalTopicsInMathMapper
+};
+
 export const runtime = 'edge';
 
-export async function generateMathQuestions(questionCount) {
+export async function generateMathQuestions(questionCount, mathTopic, mathSubTopic) {
     const dataDictTemplate = {
         "questions": [
             {
@@ -457,16 +459,15 @@ export async function generateMathQuestions(questionCount) {
     Ensure that the questions vary in difficulty, from 1 to 5, where 1 is easy and 5 is very difficult, and help challenge prospective test takers.
     I want a format similar to ${newString} and make sure it has the right amount of questions as specified. Output the questions and answers as JSON.`
 
-    const user_content1 = `Given the category: ${"Solving linear equations and linear inequalities"}, generate a suite of 11 SAT Math questions as well as 4 answer choices for each question. Return the questions,
+    const user_content1 = `Given the category: ${"heartOfAlgebra"}, generate a suite of 11 SAT Math questions as well as 4 answer choices for each question. Return the questions,
     their answer choices, the correct answer choice, a brief rationale for the correct answer, and an estimated difficulty score for each question. 
     The following represents a list of sample questions from the above category that you can use to generate new questions from: ${heartOfAlgebraMapper["Solving linear equations and linear inequalities"]}. Make the questions significantly harder than the list of sample questions`
 
-
     const assistant_content_1 = JSON.stringify(dataDictTemplate, null, 4);
 
-    const user_content2 = `Given the category: ${"Solving Quadratic Equations"}, generate a suite of ${questionCount} SAT Math questions as well as 4 answer choices for each question. Return the questions,
+    const user_content2 = `Given the category: ${mathTopic}, generate a suite of ${questionCount} SAT Math questions as well as 4 answer choices for each question. Return the questions,
     their answer choices, the correct answer choice, a brief rationale for the correct answer, and an estimated difficulty score for each question. 
-    The following represents a list of sample questions from the above category that you can use to generate new questions from: ${passportToAdvancedMathMapper["Solving Quadratic Equations"]}. Make the questions significantly harder than the list of sample questions`
+    The following represents a list of sample questions from the above category that you can use to generate new questions from: ${topicMapper[mathTopic][mathSubTopic]}. Make the questions significantly harder than the list of sample questions`
 
 
     try {

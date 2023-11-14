@@ -16,13 +16,14 @@ import Status from '../components/Status/Status';
 import Download from '../components/Download/Download';
 
 const inter = Inter({ subsets: ['latin'] });
-
-const subCategories = ["scienceFiction", "biology", "physics", "chemistry", "currentHistory"];
 const questionTypes = ["Multiple-Choice", "True/False", "Short Answer"];
 
 export default function Home() {
   const [category, setCategory] = useState('Reading');
   const [subCategory, setSubCategory] = useState('scienceFiction');
+  const [mathSubTopics, setMathSubTopics] = useState(["Solving linear equations and linear inequalities", "Interpreting linear functions", "Linear Equation Word Problems", "Linear Inequality Word Problems",
+    "Graphing Linear Equations", "Linear Function Word Problems", "Systems of linear inequalities word problems", "Solving Systems of Linear Equations", "System of Linear Equations Word Problems"]);
+  const [mathSubTopic, setMathSubTopic] = useState('');
   const [questionCount, setQuestionCount] = useState(11);
   const [questionType, setQuestionType] = useState('Multiple-Choice');
   const [format, setFormat] = useState('pdf');
@@ -38,6 +39,7 @@ export default function Home() {
       timestamp: new Date().toISOString(),
       questionCategory: category.toLowerCase(),
       questionSubCategory: subCategory,
+      mathSubTopic: mathSubTopic,
       questionCount: questionCount,
       questionType: questionType.toLowerCase().replace('/', '-'),
       format: format,
@@ -69,13 +71,16 @@ export default function Home() {
       <Header />
       <Form
         category={category}
+        subCategory={subCategory}
+        mathSubTopics={mathSubTopics}
         setCategory={setCategory}
         setSubCategory={setSubCategory}
         setQuestionCount={setQuestionCount}
         setQuestionType={setQuestionType}
+        setMathSubTopic={setMathSubTopic}
+        setMathSubTopics={setMathSubTopics}
         setFormat={setFormat}
         handleSubmit={handleSubmit}
-        subCategories={subCategories}
         questionTypes={questionTypes}
       />
       <Status

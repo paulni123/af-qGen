@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   const body = req.body;
-  const { timestamp, questionCategory, questionSubCategory, questionCount, questionType, format } = body;
+  const { timestamp, questionCategory, questionSubCategory, mathSubTopic, questionCount, questionType, format } = body;
   console.log(JSON.stringify(body));
 
   let result;
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
     case 'math':
       try {
         // Call the generateQuestions function to get a StreamingTextResponse
-        const streamingResponse = await generateMathQuestions(questionCount);
+        const streamingResponse = await generateMathQuestions(questionCount, questionSubCategory, mathSubTopic);
 
 
         let chunks = '';
