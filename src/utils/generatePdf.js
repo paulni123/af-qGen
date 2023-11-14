@@ -36,15 +36,26 @@ export async function generatePdf(content, questions, subject) {
   `;
 
   questions.forEach((question, index) => {
+    let tableContent = '';
+    if (question.includesVisual && question.visualData.html) {
+      tableContent = `
+      <div class="visual" style="margin-bottom: 20px;">
+        ${question.visualData.html.replace('<table>', '<table style="width: 100%; border-collapse: collapse; border: 1px solid black;">')
+          .replace(/<td>/g, '<td style="border: 1px solid black; padding: 8px; text-align: center;">')
+          .replace(/<th>/g, '<th style="border: 1px solid black; padding: 8px; text-align: center; background-color: #f2f2f2;">')}
+      </div>`;
+    }
+
     htmlContent += `
-      <div class="question">
-        <b>Q${index + 1}: ${question.question}</b>
-        <ul>
-          ${question.options.map(opt => `<li>${opt}</li>`).join('')}
-        </ul>
-        <p><b>Correct Answer:</b> ${question.correct_answer}</p>
-        <p><b>Reason:</b> ${question.whyCorrectAnswer}</p>
-      </div>
+      ${tableContent}
+        <div class="question">
+          <b>Q${index + 1}: ${question.question}</b>
+          <ul>
+            ${question.options.map(opt => `<li>${opt}</li>`).join('')}
+          </ul>
+          <p><b>Correct Answer:</b> ${question.correct_answer}</p>
+          <p><b>Reason:</b> ${question.whyCorrectAnswer}</p>
+        </div>
     `;
   });
 

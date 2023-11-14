@@ -194,7 +194,11 @@ const problemSolvingAndDataAnalysisMapper = {
         "Grant and Tim made 8.2 gallons of chili. About how many liters of chili did they make? (1 gallon ≈ 3.785 liters) Choose 1 answer: A) 31 B) 12 C) 4.4 D) 3.8"
     ],
     "Table Data": [
-
+        "HTML: <table><tr><td></td><td>Have chores</td><td>Do not have chores</td></tr><tr><td>Have a curfew</td><td>12</td><td>4</td></tr><tr><td>Do not have a curfew</td><td>8</td><td>10</td></tr></table>, Question: The table shows data on having a curfew on school nights and having assigned chores at home for the students in Alejandro's class. Which of the following statements about these students is true? Choose 1 answer: A) Students who have a curfew are more likely to have chores than students who do not have a curfew. B) Students who have a curfew are less likely to have chores than students who do not have a curfew. C) Students who have a curfew are equally likely to have chores as students who do not have a curfew. D) There is not enough information to determine if students who have a curfew are more likely to have chores than students who do not have a curfew.",
+        "HTML: <table><tr><td></td><td>Passed the exam</td><td>Did not pass the exam</td></tr><tr><td>Completed the review sheet</td><td>13</td><td>3</td></tr><tr><td>Did not complete the review sheet</td><td>4</td><td>9</td></tr></table>, Question: Khaled's eighth-grade class took an exam on two-way frequency tables. After grading the exams, Khaled's teacher made the two-way frequency table below to show the data on completing the exam review sheet and passing the exam. Which of the following statements about these students is true? A) Students who did not complete the review sheet were more likely to have passed the exam than students who did complete the review sheet. B) Students who did not complete the review sheet were less likely to have passed the exam than students who did complete the review sheet. C) Students who did not complete the review sheet were equally likely to have passed the exam as students who did complete the review sheet. D) There is not enough information to determine if students who did not complete the review sheet were more likely to have passed the exam than students who did complete the review sheet.",
+        "HTML: <table><tr><td></td><td>Less than $50,000</td><td>At least $50,000</td></tr><tr><td>Ages 44 and under</td><td>148</td><td>68</td></tr><tr><td>Ages 45 and under</td><td>38</td><td>94</td></tr></table>, Question: A sociologist polled a random collection of people and asked them their age and annual income. The results are shown in the table to the left. Which of the following is true about the people polled? A) People age 44 and under were more likely to earn at least $50,000 than people age 45 and up. B) People age 44 and under were less likely to earn at least $50,000 than people age 45 and up. C) People age 44 and under were equally likely to earn at least $50,000 as people age 45 and up. D) There is not enough information to determine if people age 44 and under were more likely to earn at least $50,000 than people age 45 and up.",
+        "HTML: <table><tr><td></td><td>Approved</td><td>Disapproved</td><td>No opinion</td></tr><tr><td>April 27, 2009</td><td>945</td><td>465</td><td>90</td></tr><tr><td>September 3, 2014</td><td>615</td><td>825</td><td>60</td></tr></table>, Question: Gallup polled a different random collection of 1,500 adults daily over a multi-year span and asked them whether they approve or disapprove of President Obama's performance in office. The two-way frequency table below shows the results on April 27, 2009, and September 3, 2014. Which of the following is true about adults polled during the study? A) Adults polled on April 27, 2009, were more likely to approve of President Obama's performance than adults polled on September 3, 2014. B) Adults polled on April 27, 2009, were less likely to approve of President Obama's performance than adults polled on September 3, 2014. C) Adults polled on April 27, 2009, were equally likely to approve of President Obama's performance as adults polled on September 3, 2014. D) There is not enough information to determine if adults polled on April 27, 2009, were more likely to approve of President Obama's performance than adults polled on September 3, 2014.",
+        "HTML: <table><tr><td></td><td>Not at risk of obesity</td><td>At risk of obesity</td><td>Row total</td></tr><tr><td>Age 18 to 24</td><td>400</td><td>50</td><td>450</td></tr><tr><td>Age 25 to 44</td><td>180</td><td>70</td><td>250</td></tr><tr><td>Total</td><td>580</td><td>120</td><td>700</td></tr></table>, Question: The two-way table at left shows data on age and risk of obesity for all club basketball players aged 18 to 44 in Denver, Colorado. Rounded to the nearest hundredth, what is the probability that a player aged 25 to 44 is at risk of obesity?"
     ],
     "Scatterplots": [
 
@@ -307,7 +311,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "D. 15",
                 "whyCorrectAnswer": "Solving for y gives us: 4 * 7 + 11 = 3y, then y = 15.",
-                "difficulty": 2
+                "difficulty": 2,
+                "includesVisual": false,
+                "visualData": { html: '' },
             },
             {
                 "id": "2",
@@ -321,7 +327,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "B. 6",
                 "whyCorrectAnswer": "Solving for x gives us: 2x + 3x + 12 = 42, then 5x = 30 and x = 6.",
-                "difficulty": 2
+                "difficulty": 2,
+                "includesVisual": false,
+                "visualData": { html: '' },
             },
             {
                 "id": "3",
@@ -335,7 +343,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "B. 4",
                 "whyCorrectAnswer": "Solving for y gives us: 7y - 2y = 24 - 2, then 5y = 22 and y = 4.4",
-                "difficulty": 3
+                "difficulty": 3,
+                "includesVisual": false,
+                "visualData": { html: '' },
             },
             {
                 "id": "4",
@@ -349,7 +359,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "B. 2",
                 "whyCorrectAnswer": "Solving for x gives us: 12 = 6x, then x = 2.",
-                "difficulty": 3
+                "difficulty": 3,
+                "includesVisual": false,
+                "visualData": { html: '' },
             },
             {
                 "id": "5",
@@ -363,7 +375,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "C. 7",
                 "whyCorrectAnswer": "Solving for x gives us: 5x - 15 - 2x = 15, then 3x = 30 and x = 10.",
-                "difficulty": 4
+                "difficulty": 4,
+                "includesVisual": false,
+                "visualData": { html: '' },
             },
             {
                 "id": "6",
@@ -377,7 +391,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "C. 8",
                 "whyCorrectAnswer": "Solving for x gives us: x + 4 = 3x - 12, then 2x = 16 and x = 8.",
-                "difficulty": 4
+                "difficulty": 4,
+                "includesVisual": false,
+                "visualData": { html: '' },
             },
             {
                 "id": "7",
@@ -391,7 +407,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "A. 28",
                 "whyCorrectAnswer": "Solving for z gives us: 12z - 21 = 12z + 32, then z = 28.",
-                "difficulty": 4
+                "difficulty": 4,
+                "includesVisual": false,
+                "visualData": { html: '' },
             },
             {
                 "id": "8",
@@ -405,7 +423,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "B. 3",
                 "whyCorrectAnswer": "Solving for x gives us: 5/x = 15 - x, then 5 = 15x - x^2, and so x = 3. ",
-                "difficulty": 5
+                "difficulty": 5,
+                "includesVisual": false,
+                "visualData": { html: '' },
             },
             {
                 "id": "9",
@@ -419,7 +439,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "B. 6",
                 "whyCorrectAnswer": "To solve this equation, write the fractions as 4x-8+3x-3 = (x+1)(x-2), so x = 6",
-                "difficulty": 5
+                "difficulty": 5,
+                "includesVisual": false,
+                "visualData": { html: '' },
             },
             {
                 "id": "10",
@@ -433,7 +455,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "A. 1",
                 "whyCorrectAnswer": "The equation simplifies to 3x^2 + 4x - 4 = 3, so x^2 + 4x/3 - 1 = 0, and the denominator goes to x = 1 or x = -3.",
-                "difficulty": 5
+                "difficulty": 5,
+                "includesVisual": false,
+                "visualData": { html: '' },
             },
             {
                 "id": "11",
@@ -447,7 +471,9 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 ],
                 "correct_answer": "A. 2",
                 "whyCorrectAnswer": "Squaring both sides gives 4x + 16 = x^2 + 8x + 16, and simplifying yields x^2 + 4x = 0, so x = 2.",
-                "difficulty": 5
+                "difficulty": 5,
+                "includesVisual": false,
+                "visualData": { html: '' },
             }
         ]
     };
@@ -461,13 +487,15 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
 
     const user_content1 = `Given the category: ${"heartOfAlgebra"}, generate a suite of 11 SAT Math questions as well as 4 answer choices for each question. Return the questions,
     their answer choices, the correct answer choice, a brief rationale for the correct answer, and an estimated difficulty score for each question. 
-    The following represents a list of sample questions from the above category that you can use to generate new questions from: ${heartOfAlgebraMapper["Solving linear equations and linear inequalities"]}. Make the questions significantly harder than the list of sample questions`
+    The following represents a list of sample questions from the above category that you can use to generate new questions from: ${heartOfAlgebraMapper["Solving linear equations and linear inequalities"]}. Make the questions significantly harder than the list of sample questions.
+    If the questions include visual data such as HTML or points, ensure that the new questions generated differ in terms of content and data points for the visual. `
 
     const assistant_content_1 = JSON.stringify(dataDictTemplate, null, 4);
 
     const user_content2 = `Given the category: ${mathTopic}, generate a suite of ${questionCount} SAT Math questions as well as 4 answer choices for each question. Return the questions,
     their answer choices, the correct answer choice, a brief rationale for the correct answer, and an estimated difficulty score for each question. 
-    The following represents a list of sample questions from the above category that you can use to generate new questions from: ${topicMapper[mathTopic][mathSubTopic]}. Make the questions significantly harder than the list of sample questions`
+    The following represents a list of sample questions from the above category that you can use to generate new questions from: ${topicMapper[mathTopic][mathSubTopic]}. Make the questions significantly harder than the list of sample questions.
+    If the questions include visual data such as HTML or points, ensure that the new questions generated differ in terms of content and data points for the visual. `
 
 
     try {
