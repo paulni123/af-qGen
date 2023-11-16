@@ -1,16 +1,9 @@
 import { OpenAIStream, StreamingTextResponse } from 'ai'; // Replace this import with the appropriate SDK or library you're using.
 import OpenAI from 'openai';
+
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_KEY
 });
-
-// const topicMapper = {
-//     "heartOfAlgebra": ["Solving linear equations and linear inequalities", "Interpreting linear functions", "Linear Equation Word Problems", "Linear Inequality Word Problems",
-//         "Graphing Linear Equations", "Linear Function Word Problems", "Systems of linear inequalities word problems", "Solving Systems of Linear Equations", "System of Linear Equations Word Problems"],
-//     "passportToAdvancedMath": ["Solving Quadratic Equations", "Interpreting nonlinear expressions", "Quadratic and Exponential Word Problems", "Manipulating quadratic and exponential expressions", "Radical and rational expressions", "Radical and rational equations", "Operations with rational expressions", "Operations With Polynomials", "Polynomial Factors and Graphs", "Non-Linear Equation Graphs", "Linear and Quadratic Systems", "Structure in expressions", "Isolating Quantities", "Function Notation"],
-//     "problemSolvingAndDataAnalysis": ["Ratios, rates, and proportions", "Percents", "Units", "Table Data", "Scatterplots", "Key features of graphs", "Linear and exponential growth", "Data inferences", "Center, spread, and shape of distributions", "Data collection and conclusions"],
-//     "additionalTopicsInMath": ["Volume word problems", "Right triangle word problems", "Congruence and similarity", "Right triangle trigonometry", "Angles, arc lengths, and trig functions", "Circle Theorems", "Circle equations", "Complex Numbers"]
-// }
 
 const heartOfAlgebraMapper = {
     "Solving linear equations and linear inequalities": ['j/2 + 7 = 12. What is the value of j in the equation shown above?', 'k/4 + 3 = 14. What is the value of k in the equation shown above?',
@@ -194,14 +187,247 @@ const problemSolvingAndDataAnalysisMapper = {
         "Grant and Tim made 8.2 gallons of chili. About how many liters of chili did they make? (1 gallon ≈ 3.785 liters) Choose 1 answer: A) 31 B) 12 C) 4.4 D) 3.8"
     ],
     "Table Data": [
-        "HTML: <table><tr><td></td><td>Have chores</td><td>Do not have chores</td></tr><tr><td>Have a curfew</td><td>12</td><td>4</td></tr><tr><td>Do not have a curfew</td><td>8</td><td>10</td></tr></table>, Question: The table shows data on having a curfew on school nights and having assigned chores at home for the students in Alejandro's class. Which of the following statements about these students is true? Choose 1 answer: A) Students who have a curfew are more likely to have chores than students who do not have a curfew. B) Students who have a curfew are less likely to have chores than students who do not have a curfew. C) Students who have a curfew are equally likely to have chores as students who do not have a curfew. D) There is not enough information to determine if students who have a curfew are more likely to have chores than students who do not have a curfew.",
-        "HTML: <table><tr><td></td><td>Passed the exam</td><td>Did not pass the exam</td></tr><tr><td>Completed the review sheet</td><td>13</td><td>3</td></tr><tr><td>Did not complete the review sheet</td><td>4</td><td>9</td></tr></table>, Question: Khaled's eighth-grade class took an exam on two-way frequency tables. After grading the exams, Khaled's teacher made the two-way frequency table below to show the data on completing the exam review sheet and passing the exam. Which of the following statements about these students is true? A) Students who did not complete the review sheet were more likely to have passed the exam than students who did complete the review sheet. B) Students who did not complete the review sheet were less likely to have passed the exam than students who did complete the review sheet. C) Students who did not complete the review sheet were equally likely to have passed the exam as students who did complete the review sheet. D) There is not enough information to determine if students who did not complete the review sheet were more likely to have passed the exam than students who did complete the review sheet.",
-        "HTML: <table><tr><td></td><td>Less than $50,000</td><td>At least $50,000</td></tr><tr><td>Ages 44 and under</td><td>148</td><td>68</td></tr><tr><td>Ages 45 and under</td><td>38</td><td>94</td></tr></table>, Question: A sociologist polled a random collection of people and asked them their age and annual income. The results are shown in the table to the left. Which of the following is true about the people polled? A) People age 44 and under were more likely to earn at least $50,000 than people age 45 and up. B) People age 44 and under were less likely to earn at least $50,000 than people age 45 and up. C) People age 44 and under were equally likely to earn at least $50,000 as people age 45 and up. D) There is not enough information to determine if people age 44 and under were more likely to earn at least $50,000 than people age 45 and up.",
-        "HTML: <table><tr><td></td><td>Approved</td><td>Disapproved</td><td>No opinion</td></tr><tr><td>April 27, 2009</td><td>945</td><td>465</td><td>90</td></tr><tr><td>September 3, 2014</td><td>615</td><td>825</td><td>60</td></tr></table>, Question: Gallup polled a different random collection of 1,500 adults daily over a multi-year span and asked them whether they approve or disapprove of President Obama's performance in office. The two-way frequency table below shows the results on April 27, 2009, and September 3, 2014. Which of the following is true about adults polled during the study? A) Adults polled on April 27, 2009, were more likely to approve of President Obama's performance than adults polled on September 3, 2014. B) Adults polled on April 27, 2009, were less likely to approve of President Obama's performance than adults polled on September 3, 2014. C) Adults polled on April 27, 2009, were equally likely to approve of President Obama's performance as adults polled on September 3, 2014. D) There is not enough information to determine if adults polled on April 27, 2009, were more likely to approve of President Obama's performance than adults polled on September 3, 2014.",
-        "HTML: <table><tr><td></td><td>Not at risk of obesity</td><td>At risk of obesity</td><td>Row total</td></tr><tr><td>Age 18 to 24</td><td>400</td><td>50</td><td>450</td></tr><tr><td>Age 25 to 44</td><td>180</td><td>70</td><td>250</td></tr><tr><td>Total</td><td>580</td><td>120</td><td>700</td></tr></table>, Question: The two-way table at left shows data on age and risk of obesity for all club basketball players aged 18 to 44 in Denver, Colorado. Rounded to the nearest hundredth, what is the probability that a player aged 25 to 44 is at risk of obesity?"
+        {
+            "id": "1",
+            "question": "The table shows data on having a curfew on school nights and having assigned chores at home for the students in Alejandro's class. Which of the following statements about these students is true?",
+            "type": "multiple_choice",
+            "options": [
+                "A) Students who have a curfew are more likely to have chores than students who do not have a curfew.",
+                "B) Students who have a curfew are less likely to have chores than students who do not have a curfew.",
+                "C) Students who have a curfew are equally likely to have chores as students who do not have a curfew.",
+                "D) There is not enough information to determine if students who have a curfew are more likely to have chores than students who do not have a curfew."
+            ],
+            "correct_answer": "A",
+            "whyCorrectAnswer": "A is correct because out of the students who have a curfew (16 total), 12 have chores, whereas out of the students who do not have a curfew (18 total), only 8 have chores.",
+            "difficulty": 3,
+            "includesVisual": true,
+            "visualData": {
+                "html": "<table><tr><td></td><td>Have chores</td><td>Do not have chores</td></tr><tr><td>Have a curfew</td><td>12</td><td>4</td></tr><tr><td>Do not have a curfew</td><td>8</td><td>10</td></tr></table>"
+            }
+        },
+        {
+            "id": "2",
+            "question": "Khaled's eighth-grade class took an exam on two-way frequency tables. After grading the exams, Khaled's teacher made the two-way frequency table below to show the data on completing the exam review sheet and passing the exam. Which of the following statements about these students is true?",
+            "type": "multiple_choice",
+            "options": [
+                "A) Students who did not complete the review sheet were more likely to have passed the exam than students who did complete the review sheet.",
+                "B) Students who did not complete the review sheet were less likely to have passed the exam than students who did complete the review sheet.",
+                "C) Students who did not complete the review sheet were equally likely to have passed the exam as students who did complete the review sheet.",
+                "D) There is not enough information to determine if students who did not complete the review sheet were more likely to have passed the exam than students who did complete the review sheet."
+            ],
+            "correct_answer": "B",
+            "whyCorrectAnswer": "B is correct because out of the 16 students who completed the review sheet, 13 passed the exam, whereas out of the 13 students who did not complete the review sheet, only 4 passed.",
+            "difficulty": 3,
+            "includesVisual": true,
+            "visualData": {
+                "html": "<table><tr><td></td><td>Passed the exam</td><td>Did not pass the exam</td></tr><tr><td>Completed the review sheet</td><td>13</td><td>3</td></tr><tr><td>Did not complete the review sheet</td><td>4</td><td>9</td></tr></table>"
+            }
+        },
+        {
+            "id": "3",
+            "question": "A sociologist polled a random collection of people and asked them their age and annual income. The results are shown in the table to the left. Which of the following is true about the people polled?",
+            "type": "multiple_choice",
+            "options": [
+                "A) People age 44 and under were more likely to earn at least $50,000 than people age 45 and up.",
+                "B) People age 44 and under were less likely to earn at least $50,000 than people age 45 and up.",
+                "C) People age 44 and under were equally likely to earn at least $50,000 as people age 45 and up.",
+                "D) There is not enough information to determine if people age 44 and under were more likely to earn at least $50,000 than people age 45 and up."
+            ],
+            "correct_answer": "B",
+            "whyCorrectAnswer": "B is correct because among people aged 44 and under, 68 out of 216 (148 + 68) earn at least $50,000, while among people aged 45 and up, 94 out of 132 (38 + 94) earn at least $50,000, making it more likely for the older age group.",
+            "difficulty": 4,
+            "includesVisual": true,
+            "visualData": {
+                "html": "<table><tr><td></td><td>Less than $50,000</td><td>At least $50,000</td></tr><tr><td>Ages 44 and under</td><td>148</td><td>68</td></tr><tr><td>Ages 45 and under</td><td>38</td><td>94</td></tr></table>"
+            }
+        },
+        {
+            "id": "4",
+            "question": "Gallup polled a different random collection of 1,500 adults daily over a multi-year span and asked them whether they approve or disapprove of President Obama's performance in office. The two-way frequency table below shows the results on April 27, 2009, and September 3, 2014. Which of the following is true about adults polled during the study?",
+            "type": "multiple_choice",
+            "options": [
+                "A) Adults polled on April 27, 2009, were more likely to approve of President Obama's performance than adults polled on September 3, 2014.",
+                "B) Adults polled on April 27, 2009, were less likely to approve of President Obama's performance than adults polled on September 3, 2014.",
+                "C) Adults polled on April 27, 2009, were equally likely to approve of President Obama's performance as adults polled on September 3, 2014.",
+                "D) There is not enough information to determine if adults polled on April 27, 2009, were more likely to approve of President Obama's performance than adults polled on September 3, 2014."
+            ],
+            "correct_answer": "A",
+            "whyCorrectAnswer": "A is correct because on April 27, 2009, 945 out of 1500 (63%) approved, whereas on September 3, 2014, only 615 out of 1500 (41%) approved, showing a higher approval rate in 2009.",
+            "difficulty": 4,
+            "includesVisual": true,
+            "visualData": {
+                "html": "<table><tr><td></td><td>Approved</td><td>Disapproved</td><td>No opinion</td></tr><tr><td>April 27, 2009</td><td>945</td><td>465</td><td>90</td></tr><tr><td>September 3, 2014</td><td>615</td><td>825</td><td>60</td></tr></table>"
+            }
+        },
+        {
+            "id": "5",
+            "question": "The two-way table at left shows data on age and risk of obesity for all club basketball players aged 18 to 44 in Denver, Colorado. Rounded to the nearest hundredth, what is the probability that a player aged 25 to 44 is at risk of obesity?",
+            "type": "multiple_choice",
+            "options": [
+                "A) 22%",
+                "B) 28%",
+                "C) 35%",
+                "D) 40%"
+            ],
+            "correct_answer": "B",
+            "whyCorrectAnswer": "B is correct because out of the 250 players aged 25 to 44, 70 are at risk of obesity, making the probability \(70/250 = 0.28\) or 28%.",
+            "difficulty": 4,
+            "includesVisual": true,
+            "visualData": {
+                "html": "<table><tr><td></td><td>Not at risk of obesity</td><td>At risk of obesity</td><td>Row total</td></tr><tr><td>Age 18 to 24</td><td>400</td><td>50</td><td>450</td></tr><tr><td>Age 25 to 44</td><td>180</td><td>70</td><td>250</td></tr><tr><td>Total</td><td>580</td><td>120</td><td>700</td></tr></table>"
+            }
+        }
     ],
     "Scatterplots": [
-
+        {
+            "id": "1",
+            "question": "A panel of judges was asked to judge the quality of different kinds of potato chips. Assuming the line correctly models the trend in the data, what does this line's slope of 5 mean?",
+            "type": "multiple_choice",
+            "options": [
+                "A. The average cost of the chips the judges sampled was $5.",
+                "B. The average rating was 5.",
+                "C. On average, each $1 increase in cost was associated with a 5 point increase in rating.",
+                "D. On average, each $5 increase in cost was associated with a 1 point increase in rating."
+            ],
+            "correct_answer": "C. On average, each $1 increase in cost was associated with a 5 point increase in rating.",
+            "whyCorrectAnswer": "The slope of the trend line represents the rate of change in the rating for each dollar increase in price. A slope of 5 indicates that for each $1 increase in price, the rating increases by 5 points.",
+            "difficulty": 2,
+            "includesVisual": true,
+            "visualData": {
+                "scatterplot": {
+                    "axesLabels": ["Cost per package ($)", "Average rating"],
+                    "trendLine": {
+                        "slope": 5,
+                        "yIntercept": -5.22
+                    },
+                    "dataPoints": [
+                        [1.1, .9], [1.15, 1.4], [1.4, 1.5], [1.3, 3.5], [1.59, 4.6],
+                        [1.7, 5], [1.75, 3.53], [1.78, 5.5], [1.8, 4], [1.9, 6.3],
+                        [2, 3.9], [2.03, 4.1], [2.1, 3.6], [2.12, 5.48], [2.14, 6.8],
+                        [2.17, 6.3], [2.3, 5], [2.35, 7], [2.4, 5.5], [2.6, 7], [2.7, 8.6]
+                    ],
+                },
+            }
+        },
+        {
+            "id": "2",
+            "question": "Adrianna gathered data on different schools' winning percentages and the average yearly salary of their head coaches (in millions of dollars) from 2000-2011. Assuming the line correctly shows the trend in the data, what does it mean that the line's y-intercept is 39?",
+            "type": "multiple_choice",
+            "options": [
+                "A. The average winning percentage was 39%.",
+                "B. The average salary was $39 million.",
+                "C. On average, each $1 million increase in salary was associated with a 39% increase in winning percentage.",
+                "D. The model indicates that teams with coaches who had a salary of $0 million will average a winning percentage of approximately 39%."
+            ],
+            "correct_answer": "D. The model indicates that teams with coaches who had a salary of $0 million will average a winning percentage of approximately 39%.",
+            "whyCorrectAnswer": "The y-intercept of a trend line in a scatter plot represents the expected value of the dependent variable when the independent variable is zero. In this context, a y-intercept of 39 means that if the coach's salary were $0 million, the model predicts the team would have an average winning percentage of 39%.",
+            "difficulty": 2,
+            "includesVisual": true,
+            "visualData": {
+                "scatterplot": {
+                    "axesLabels": ["Average yearly salary (millions)", "Winning percentage"],
+                    "trendLine": {
+                        "slope": 10,
+                        "yIntercept": 39
+                    },
+                    "dataPoints": [
+                        [1.0, 49.5], [1.5, 54.2], [2.0, 59.8], [2.5, 64.1], [3.0, 69.6],
+                        [3.5, 74.9], [4.0, 79.7], [4.5, 84.3], [5.0, 89.0], [5.5, 94.5],
+                        [6.0, 99.2], [6.5, 104.8], [7.0, 109.1], [7.5, 114.3], [8.0, 119.9],
+                        [8.5, 124.6], [9.0, 129.4], [9.5, 134.2], [10.0, 139.7], [10.5, 144.1],
+                        [11.0, 149.3]
+                    ],
+                }
+            }
+        },
+        {
+            "id": "3",
+            "question": "The scatterplot shown plots the relationship between hours spent on video games and hours spent on homework last week for students in Joyce's class. Assuming the line correctly shows the trend in the data, what does it mean that the line's y-intercept is 23?",
+            "type": "multiple_choice",
+            "options": [
+                "A. Joyce spent approximately 23 hours on homework.",
+                "B. Joyce spent approximately 23 hours on video games.",
+                "C. The model indicates that students who spent 23 hours on video games will average approximately 0 hours spent on homework.",
+                "D. The model indicates that students who spent 0 hours on video games will average approximately 23 hours spent on homework."
+            ],
+            "correct_answer": "D. The model indicates that students who spent 0 hours on video games will average approximately 23 hours spent on homework.",
+            "whyCorrectAnswer": "The y-intercept of a trend line represents the expected value of the dependent variable when the independent variable is zero. In this context, a y-intercept of 23 suggests that students who spent no hours on video games are expected to have spent an average of 23 hours on homework, according to the model's prediction.",
+            "difficulty": 2,
+            "includesVisual": true,
+            "visualData": {
+                "scatterplot": {
+                    "axesLabels": ["Hours spent on video games", "Hours spent on homework"],
+                    "trendLine": {
+                        "slope": -1,
+                        "yIntercept": 23
+                    },
+                    "dataPoints": [
+                        [0, 23.0], [1, 21.7], [2, 20.5], [3, 19.2], [4, 18.1],
+                        [5, 17.3], [6, 16.8], [7, 15.9], [8, 15.0], [9, 14.2],
+                        [10, 13.1], [11, 12.5], [12, 11.6], [13, 10.4], [14, 9.2],
+                        [15, 8.5], [16, 7.7], [17, 6.8], [18, 6.0], [19, 4.9],
+                        [20, 3.1]
+                    ],
+                }
+            }
+        },
+        {
+            "id": "4",
+            "question": "Julio distributed a survey to his fellow students asking them how many hours they spent playing sports in the past day and to rate their mood on a scale from 0 to 10, with 10 being the happiest. The survey results are shown in the graph. Which of the following best interprets the y-intercept of the line of best fit?",
+            "type": "multiple_choice",
+            "options": [
+                "A. Students who had a mood rating of 0 will spend approximately 5 hours playing sports.",
+                "B. The average mood rating was 5.",
+                "C. Students who had a mood rating of 0 must have spent 5 hours playing sports.",
+                "D. Students who spent 0 hours playing sports will have an average mood rating of approximately 5."
+            ],
+            "correct_answer": "D. Students who spent 0 hours playing sports will have an average mood rating of approximately 5.",
+            "whyCorrectAnswer": "The y-intercept of the line of best fit represents the expected value of the dependent variable (mood rating) when the independent variable (hours playing sports) is zero. Therefore, the y-intercept being at 5 suggests that students who did not spend any hours playing sports are predicted to have an average mood rating of 5.",
+            "difficulty": 2,
+            "includesVisual": true,
+            "visualData": {
+                "scatterplot": {
+                    "axesLabels": ["Hours playing sports", "Average mood"],
+                    "trendLine": {
+                        "slope": 1.5,
+                        "yIntercept": 5
+                    },
+                    "dataPoints": [
+                        [0, 4.8], [0.5, 5.4], [1.0, 6.9], [1.5, 7.2], [2.0, 8.34], [2.5, 8.5],
+                        [3.0, 9.5]
+                    ],
+                }
+            }
+        },
+        {
+            "id": "5",
+            "question": "Baruti, a ranger in Kruger National Park in South Africa, collected data about the elephant population in the park. She compared the foot lengths of the elephants to their shoulder height and created a scatter plot and trend line. What does this line's slope of 5.89 mean?",
+            "type": "multiple_choice",
+            "options": [
+                "A. The average shoulder height was 5.89 centimeters.",
+                "B. The average foot length was 5.89 centimeters.",
+                "C. On average, each 1 centimeter increase in foot length was associated with a 5.89 centimeter increase in shoulder height.",
+                "D. On average, each 1 centimeter increase in shoulder height was associated with a 5.89 centimeter increase in foot length."
+            ],
+            "correct_answer": "C. On average, each 1 centimeter increase in foot length was associated with a 5.89 centimeter increase in shoulder height.",
+            "whyCorrectAnswer": "The slope of the trend line represents the rate of change in shoulder height for each unit of change in foot length. A slope of 5.89 means that for each 1 centimeter increase in an elephant's foot length, the shoulder height is expected to increase by 5.89 centimeters.",
+            "difficulty": 2,
+            "includesVisual": true,
+            "visualData": {
+                "scatterplot": {
+                    "axesLabels": ["Foot length (cm)", "Shoulder height (cm)"],
+                    "trendLine": {
+                        "slope": 5.89,
+                        "yIntercept": 0
+                    },
+                    "dataPoints": [
+                        [50.0, 294.5], [51.0, 300.39], [52.0, 306.28], [53.0, 312.17], [54.0, 318.06],
+                        [55.0, 323.95], [56.0, 329.84], [57.0, 335.73], [58.0, 341.62], [59.0, 347.51],
+                        [60.0, 353.4]
+                    ],
+                }
+            }
+        }
     ],
     "Key features of graphs": [
 
@@ -297,6 +523,363 @@ const topicMapper = {
 export const runtime = 'edge';
 
 export async function generateMathQuestions(questionCount, mathTopic, mathSubTopic) {
+    const scatterPlotDataDictTemplate = {
+        "questions": [
+            {
+                "id": "1",
+                "question": "A panel of judges was asked to judge the quality of different kinds of potato chips. Assuming the line correctly models the trend in the data, what does this line's slope of 5 mean?",
+                "type": "multiple_choice",
+                "options": [
+                    "A. The average cost of the chips the judges sampled was $5.",
+                    "B. The average rating was 5.",
+                    "C. On average, each $1 increase in cost was associated with a 5 point increase in rating.",
+                    "D. On average, each $5 increase in cost was associated with a 1 point increase in rating."
+                ],
+                "correct_answer": "C. On average, each $1 increase in cost was associated with a 5 point increase in rating.",
+                "whyCorrectAnswer": "The slope of the trend line represents the rate of change in the rating for each dollar increase in price. A slope of 5 indicates that for each $1 increase in price, the rating increases by 5 points.",
+                "difficulty": 2,
+                "includesVisual": true,
+                "visualData": {
+                    "scatterplot": {
+                        "axesLabels": ["Cost per package ($)", "Average rating"],
+                        "trendLine": {
+                            "slope": 5,
+                            "yIntercept": -5.22
+                        },
+                        "dataPoints": [
+                            [1.1, .9], [1.15, 1.4], [1.4, 1.5], [1.3, 3.5], [1.59, 4.6],
+                            [1.7, 5], [1.75, 3.53], [1.78, 5.5], [1.8, 4], [1.9, 6.3],
+                            [2, 3.9], [2.03, 4.1], [2.1, 3.6], [2.12, 5.48], [2.14, 6.8],
+                            [2.17, 6.3], [2.3, 5], [2.35, 7], [2.4, 5.5], [2.6, 7], [2.7, 8.6]
+                        ],
+                    },
+                }
+            },
+            {
+                "id": "2",
+                "question": "Adrianna gathered data on different schools' winning percentages and the average yearly salary of their head coaches (in millions of dollars) from 2000-2011. Assuming the line correctly shows the trend in the data, what does it mean that the line's y-intercept is 39?",
+                "type": "multiple_choice",
+                "options": [
+                    "A. The average winning percentage was 39%.",
+                    "B. The average salary was $39 million.",
+                    "C. On average, each $1 million increase in salary was associated with a 39% increase in winning percentage.",
+                    "D. The model indicates that teams with coaches who had a salary of $0 million will average a winning percentage of approximately 39%."
+                ],
+                "correct_answer": "D. The model indicates that teams with coaches who had a salary of $0 million will average a winning percentage of approximately 39%.",
+                "whyCorrectAnswer": "The y-intercept of a trend line in a scatter plot represents the expected value of the dependent variable when the independent variable is zero. In this context, a y-intercept of 39 means that if the coach's salary were $0 million, the model predicts the team would have an average winning percentage of 39%.",
+                "difficulty": 2,
+                "includesVisual": true,
+                "visualData": {
+                    "scatterplot": {
+                        "axesLabels": ["Average yearly salary (millions)", "Winning percentage"],
+                        "trendLine": {
+                            "slope": 10,
+                            "yIntercept": 39
+                        },
+                        "dataPoints": [
+                            [1.0, 49.5], [1.5, 54.2], [2.0, 59.8], [2.5, 64.1], [3.0, 69.6],
+                            [3.5, 74.9], [4.0, 79.7], [4.5, 84.3], [5.0, 89.0], [5.5, 94.5],
+                            [6.0, 99.2], [6.5, 104.8], [7.0, 109.1], [7.5, 114.3], [8.0, 119.9],
+                            [8.5, 124.6], [9.0, 129.4], [9.5, 134.2], [10.0, 139.7], [10.5, 144.1],
+                            [11.0, 149.3]
+                        ],
+                    }
+                }
+            },
+            {
+                "id": "3",
+                "question": "The scatterplot shown plots the relationship between hours spent on video games and hours spent on homework last week for students in Joyce's class. Assuming the line correctly shows the trend in the data, what does it mean that the line's y-intercept is 23?",
+                "type": "multiple_choice",
+                "options": [
+                    "A. Joyce spent approximately 23 hours on homework.",
+                    "B. Joyce spent approximately 23 hours on video games.",
+                    "C. The model indicates that students who spent 23 hours on video games will average approximately 0 hours spent on homework.",
+                    "D. The model indicates that students who spent 0 hours on video games will average approximately 23 hours spent on homework."
+                ],
+                "correct_answer": "D. The model indicates that students who spent 0 hours on video games will average approximately 23 hours spent on homework.",
+                "whyCorrectAnswer": "The y-intercept of a trend line represents the expected value of the dependent variable when the independent variable is zero. In this context, a y-intercept of 23 suggests that students who spent no hours on video games are expected to have spent an average of 23 hours on homework, according to the model's prediction.",
+                "difficulty": 2,
+                "includesVisual": true,
+                "visualData": {
+                    "scatterplot": {
+                        "axesLabels": ["Hours spent on video games", "Hours spent on homework"],
+                        "trendLine": {
+                            "slope": -1,
+                            "yIntercept": 23
+                        },
+                        "dataPoints": [
+                            [0, 23.0], [1, 21.7], [2, 20.5], [3, 19.2], [4, 18.1],
+                            [5, 17.3], [6, 16.8], [7, 15.9], [8, 15.0], [9, 14.2],
+                            [10, 13.1], [11, 12.5], [12, 11.6], [13, 10.4], [14, 9.2],
+                            [15, 8.5], [16, 7.7], [17, 6.8], [18, 6.0], [19, 4.9],
+                            [20, 3.1]
+                        ],
+                    }
+                }
+            },
+            {
+                "id": "4",
+                "question": "Julio distributed a survey to his fellow students asking them how many hours they spent playing sports in the past day and to rate their mood on a scale from 0 to 10, with 10 being the happiest. The survey results are shown in the graph. Which of the following best interprets the y-intercept of the line of best fit?",
+                "type": "multiple_choice",
+                "options": [
+                    "A. Students who had a mood rating of 0 will spend approximately 5 hours playing sports.",
+                    "B. The average mood rating was 5.",
+                    "C. Students who had a mood rating of 0 must have spent 5 hours playing sports.",
+                    "D. Students who spent 0 hours playing sports will have an average mood rating of approximately 5."
+                ],
+                "correct_answer": "D. Students who spent 0 hours playing sports will have an average mood rating of approximately 5.",
+                "whyCorrectAnswer": "The y-intercept of the line of best fit represents the expected value of the dependent variable (mood rating) when the independent variable (hours playing sports) is zero. Therefore, the y-intercept being at 5 suggests that students who did not spend any hours playing sports are predicted to have an average mood rating of 5.",
+                "difficulty": 2,
+                "includesVisual": true,
+                "visualData": {
+                    "scatterplot": {
+                        "axesLabels": ["Hours playing sports", "Average mood"],
+                        "trendLine": {
+                            "slope": 1.5,
+                            "yIntercept": 5
+                        },
+                        "dataPoints": [
+                            [0, 4.8], [0.5, 5.4], [1.0, 6.9], [1.5, 7.2], [2.0, 8.34], [2.5, 8.5],
+                            [3.0, 9.5]
+                        ],
+                    }
+                }
+            },
+            {
+                "id": "5",
+                "question": "Baruti, a ranger in Kruger National Park in South Africa, collected data about the elephant population in the park. She compared the foot lengths of the elephants to their shoulder height and created a scatter plot and trend line. What does this line's slope of 5.89 mean?",
+                "type": "multiple_choice",
+                "options": [
+                    "A. The average shoulder height was 5.89 centimeters.",
+                    "B. The average foot length was 5.89 centimeters.",
+                    "C. On average, each 1 centimeter increase in foot length was associated with a 5.89 centimeter increase in shoulder height.",
+                    "D. On average, each 1 centimeter increase in shoulder height was associated with a 5.89 centimeter increase in foot length."
+                ],
+                "correct_answer": "C. On average, each 1 centimeter increase in foot length was associated with a 5.89 centimeter increase in shoulder height.",
+                "whyCorrectAnswer": "The slope of the trend line represents the rate of change in shoulder height for each unit of change in foot length. A slope of 5.89 means that for each 1 centimeter increase in an elephant's foot length, the shoulder height is expected to increase by 5.89 centimeters.",
+                "difficulty": 2,
+                "includesVisual": true,
+                "visualData": {
+                    "scatterplot": {
+                        "axesLabels": ["Foot length (cm)", "Shoulder height (cm)"],
+                        "trendLine": {
+                            "slope": 5.89,
+                            "yIntercept": 0
+                        },
+                        "dataPoints": [
+                            [50.0, 294.5], [51.0, 300.39], [52.0, 306.28], [53.0, 312.17], [54.0, 318.06],
+                            [55.0, 323.95], [56.0, 329.84], [57.0, 335.73], [58.0, 341.62], [59.0, 347.51],
+                            [60.0, 353.4]
+                        ],
+                    }
+                }
+            }
+        ]
+    };
+
+    const tableDataDictTemplate = {
+        "questions": [
+            {
+                "id": "1",
+                "question": "During a survey of a high school's student body, the following table was created. Which of the following is true about the student body?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) More students play a musical instrument than participate in a sport.",
+                    "B) More students participate in a sport than play a musical instrument.",
+                    "C) The number of students who play a musical instrument is equal to those who participate in a sport.",
+                    "D) There is not enough information to determine the relationship between students who play a musical instrument and those who participate in a sport."
+                ],
+                "correct_answer": "B",
+                "whyCorrectAnswer": "B because 130 students play a musical instrument (70 + 60) and 200 participate in a sport (110 + 90), so there are more sport participants.",
+                "difficulty": 2,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td></td><td>Plays a Musical Instrument</td><td>Does Not Play a Musical Instrument</td></tr><tr><td>Participates in a Sport</td><td>70</td><td>110</td></tr><tr><td>Does Not Participate in a Sport</td><td>60</td><td>90</td></tr></table>"
+                }
+            },
+            {
+                "id": "2",
+                "question": "A survey was taken to understand commuting preferences among office workers. Which mode of transportation is most favored among the workers surveyed?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) Car",
+                    "B) Bus",
+                    "C) Train",
+                    "D) Walking"
+                ],
+                "correct_answer": "A",
+                "whyCorrectAnswer": "A because the number of workers who use a car, 460 (300 + 160), is greater than any other mode of transportation.",
+                "difficulty": 2,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td></td><td>Less than 30 minutes</td><td>More than 30 minutes</td></tr><tr><td>Car</td><td>300</td><td>160</td></tr><tr><td>Bus</td><td>120</td><td>100</td></tr><tr><td>Train</td><td>140</td><td>80</td></tr><tr><td>Walking</td><td>110</td><td>20</td></tr></table>"
+                }
+            },
+            {
+                "id": "3",
+                "question": "Based on the given class schedule data, how many more students are taking Science than Math if each classroom can handle 30 students?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) 2 classrooms worth of students",
+                    "B) 3 classrooms worth of students",
+                    "C) 4 classrooms worth of students",
+                    "D) 5 classrooms worth of students"
+                ],
+                "correct_answer": "B",
+                "whyCorrectAnswer": "B because there are 360 Science students (12 classes x 30) and 270 Math students (9 classes x 30), which is a difference of 90 students (3 classrooms).",
+                "difficulty": 3,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td></td><td>Number of Classes</td></tr><tr><td>Math</td><td>9</td></tr><tr><td>Science</td><td>12</td></tr><tr><td>History</td><td>10</td></tr><tr><td>English</td><td>11</td></tr></table>"
+                }
+            },
+            {
+                "id": "4",
+                "question": "A survey was conducted to determine the favorite subject among students in eighth grade. Based on the table, what is the ratio of students who prefer Math to those who prefer Science?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) 3:5",
+                    "B) 5:3",
+                    "C) 2:5",
+                    "D) 5:2"
+                ],
+                "correct_answer": "A",
+                "whyCorrectAnswer": "A because there are 150 students who prefer Math and 250 who prefer Science, so the ratio is 150:250, which simplifies to 3:5.",
+                "difficulty": 3,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td>Favorite Subject</td><td>Number of Students</td></tr><tr><td>Math</td><td>150</td></tr><tr><td>Science</td><td>250</td></tr><tr><td>English</td><td>200</td></tr><tr><td>History</td><td>100</td></tr></table>"
+                }
+            },
+            {
+                "id": "5",
+                "question": "A local cinema surveyed patrons on which genre of movie they watched last. If 25% of all patrons surveyed watched a comedy last, how many people were surveyed?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) 320",
+                    "B) 360",
+                    "C) 400",
+                    "D) 440"
+                ],
+                "correct_answer": "C",
+                "whyCorrectAnswer": "C because 25% of the surveyed patrons equal 100 people (the number who watched a comedy last), therefore a total of 400 people were surveyed.",
+                "difficulty": 4,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td>Genre</td><td>Number of Patrons</td></tr><tr><td>Action</td><td>150</td></tr><tr><td>Comedy</td><td>100</td></tr><tr><td>Drama</td><td>90</td></tr><tr><td>Sci-Fi</td><td>60</td></tr></table>"
+                }
+            },
+            {
+                "id": "6",
+                "question": "An airport tracks the number of flights and passengers for two airlines. If the average number of passengers per flight for Airline A is 150 and for Airline B is 180, how many more passengers in total did Airline B carry compared to Airline A?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) 750",
+                    "B) 900",
+                    "C) 1,050",
+                    "D) 1,200"
+                ],
+                "correct_answer": "B",
+                "whyCorrectAnswer": "B because Airline A carried 150 x 20 = 3,000 passengers and Airline B carried 180 x 25 = 4,500 passengers. Hence, Airline B carried 4,500 - 3,000 = 1,500 more passengers.",
+                "difficulty": 5,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td></td><td>Number of Flights</td></tr><tr><td>Airline A</td><td>20</td></tr><tr><td>Airline B</td><td>25</td></tr></table>"
+                }
+            },
+            {
+                "id": "7",
+                "question": "A furniture store had a sale last month and kept data on items sold. Based on the table, how much less revenue did Sofas generate compared to Tables if each table sold for $299 and each sofa for $799?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) $5,000",
+                    "B) $8,000",
+                    "C) $10,000",
+                    "D) $12,000"
+                ],
+                "correct_answer": "D",
+                "whyCorrectAnswer": "D because Table revenue is 299 x 50 = $14,950 and Sofa revenue is 799 x 20 = $15,980. The difference is 15,980 - 14,950 = $1,030.",
+                "difficulty": 5,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td>Item</td><td>Units Sold</td></tr><tr><td>Tables</td><td>50</td></tr><tr><td>Sofas</td><td>20</td></tr><tr><td>Chairs</td><td>80</td></tr></table>"
+                }
+            },
+            {
+                "id": "8",
+                "question": "In a survey on pet ownership, what is the probability that a randomly chosen participant has a dog if it is known that they have at least one pet?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) 1/3",
+                    "B) 1/2",
+                    "C) 2/3",
+                    "D) 3/4"
+                ],
+                "correct_answer": "C",
+                "whyCorrectAnswer": "C because there are 150 participants who have at least one pet (100 with a dog + 50 with a cat), and 100 of those have a dog. So the probability is 100/150 = 2/3.",
+                "difficulty": 4,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td></td><td>Has a Dog</td><td>Does Not Have a Dog</td></tr><tr><td>Has a Cat</td><td>30</td><td>50</td></tr><tr><td>Does Not Have a Cat</td><td>70</td><td>80</td></tr></table>"
+                }
+            },
+            {
+                "id": "9",
+                "question": "A clinic monitored patients who received either medication A or B over a month. On how many more days was medication A administered than medication B?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) 3 days",
+                    "B) 5 days",
+                    "C) 8 days",
+                    "D) 10 days"
+                ],
+                "correct_answer": "A",
+                "whyCorrectAnswer": "A because medication A was administered for 22 days and medication B for 19 days, which results in a difference of 3 days.",
+                "difficulty": 3,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td></td><td>Number of Days Administered</td></tr><tr><td>Medication A</td><td>22</td></tr><tr><td>Medication B</td><td>19</td></tr></table>"
+                }
+            },
+            {
+                "id": "10",
+                "question": "According to the table, what percentage of surveyed smartphone users use Brand X more than Brand Y?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) 45%",
+                    "B) 55%",
+                    "C) 65%",
+                    "D) 75%"
+                ],
+                "correct_answer": "B",
+                "whyCorrectAnswer": "B because there are 110 users of Brand X and 90 of Brand Y. Therefore, Brand X is preferred by (110 / (110 + 90)) x 100% = 55% of the users.",
+                "difficulty": 4,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td>Brand</td><td>Number of Users</td></tr><tr><td>Brand X</td><td>110</td></tr><tr><td>Brand Y</td><td>90</td></tr></table>"
+                }
+            },
+            {
+                "id": "11",
+                "question": "The two-way frequency table records the number of phones sold by two stores over the weekend. If each phone was sold for the same price, which store made more in sales and by how much?",
+                "type": "multiple_choice",
+                "options": [
+                    "A) Store A by $3,000",
+                    "B) Store A by $4,500",
+                    "C) Store B by $3,000",
+                    "D) Store B by $4,500"
+                ],
+                "correct_answer": "A",
+                "whyCorrectAnswer": "A because Store A sold 60 phones and Store B sold 40 phones. If each phone was sold for the same price, then assuming a price of $150 per phone, Store A sold $9,000 worth of phones and Store B $6,000, so Store A made $3,000 more.",
+                "difficulty": 4,
+                "includesVisual": true,
+                "visualData": {
+                    "html": "<table><tr><td></td><td>Saturday</td><td>Sunday</td></tr><tr><td>Store A</td><td>30</td><td>30</td></tr><tr><td>Store B</td><td>20</td><td>20</td></tr></table>"
+                }
+            }
+        ]
+    }
+
     const dataDictTemplate = {
         "questions": [
             {
@@ -313,7 +896,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "Solving for y gives us: 4 * 7 + 11 = 3y, then y = 15.",
                 "difficulty": 2,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             },
             {
                 "id": "2",
@@ -329,7 +923,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "Solving for x gives us: 2x + 3x + 12 = 42, then 5x = 30 and x = 6.",
                 "difficulty": 2,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             },
             {
                 "id": "3",
@@ -345,7 +950,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "Solving for y gives us: 7y - 2y = 24 - 2, then 5y = 22 and y = 4.4",
                 "difficulty": 3,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             },
             {
                 "id": "4",
@@ -361,7 +977,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "Solving for x gives us: 12 = 6x, then x = 2.",
                 "difficulty": 3,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             },
             {
                 "id": "5",
@@ -377,7 +1004,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "Solving for x gives us: 5x - 15 - 2x = 15, then 3x = 30 and x = 10.",
                 "difficulty": 4,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             },
             {
                 "id": "6",
@@ -393,7 +1031,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "Solving for x gives us: x + 4 = 3x - 12, then 2x = 16 and x = 8.",
                 "difficulty": 4,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             },
             {
                 "id": "7",
@@ -409,7 +1058,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "Solving for z gives us: 12z - 21 = 12z + 32, then z = 28.",
                 "difficulty": 4,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             },
             {
                 "id": "8",
@@ -425,7 +1085,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "Solving for x gives us: 5/x = 15 - x, then 5 = 15x - x^2, and so x = 3. ",
                 "difficulty": 5,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             },
             {
                 "id": "9",
@@ -441,7 +1112,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "To solve this equation, write the fractions as 4x-8+3x-3 = (x+1)(x-2), so x = 6",
                 "difficulty": 5,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             },
             {
                 "id": "10",
@@ -457,7 +1139,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "The equation simplifies to 3x^2 + 4x - 4 = 3, so x^2 + 4x/3 - 1 = 0, and the denominator goes to x = 1 or x = -3.",
                 "difficulty": 5,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             },
             {
                 "id": "11",
@@ -473,7 +1166,18 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 "whyCorrectAnswer": "Squaring both sides gives 4x + 16 = x^2 + 8x + 16, and simplifying yields x^2 + 4x = 0, so x = 2.",
                 "difficulty": 5,
                 "includesVisual": false,
-                "visualData": { html: '' },
+                "visualData": {
+                    html: `<table>...Include only if the question category is of Table Data`, scatterplot: {
+                        "axesLabels": ["X", "Y"],
+                        "trendLine": {
+                            "slope": 145,
+                            "yIntercept": 151
+                        },
+                        "dataPoints": [
+
+                        ],
+                    }
+                },
             }
         ]
     };
@@ -485,18 +1189,128 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
     Ensure that the questions vary in difficulty, from 1 to 5, where 1 is easy and 5 is very difficult, and help challenge prospective test takers.
     I want a format similar to ${newString} and make sure it has the right amount of questions as specified. Output the questions and answers as JSON.`
 
-    const user_content1 = `Given the category: ${"heartOfAlgebra"}, generate a suite of 11 SAT Math questions as well as 4 answer choices for each question. Return the questions,
-    their answer choices, the correct answer choice, a brief rationale for the correct answer, and an estimated difficulty score for each question. 
-    The following represents a list of sample questions from the above category that you can use to generate new questions from: ${heartOfAlgebraMapper["Solving linear equations and linear inequalities"]}. Make the questions significantly harder than the list of sample questions.
-    If the questions include visual data such as HTML or points, ensure that the new questions generated differ in terms of content and data points for the visual. `
+    const user_content1 = `Given the category: ${"Solving linear equations and linear inequalities"}, generate a suite of 11 SAT Math questions, each with 4 answer choices. For each question, provide:
+
+    1. **question**: Clearly state the problem to be solved.
+    2. **options**: Offer four distinct answer options.
+    3. **correct_answer**: Identify the correct option.
+    4. **whyCorrectAnswer**: Give a brief explanation for why the correct answer is the best choice.
+    5. **difficulty**: Assign an estimated difficulty level to each question, making sure they are significantly harder than the examples.
+    6. **includesVisual** Assign an boolean to each question whether it contains a visual. 
+    7. **visualData** Indicate metadata for the visualContent only if the question includes a visual
+
+    Use the sample questions from the category "Solving linear equations and linear inequalities" available in ${heartOfAlgebraMapper["Solving linear equations and linear inequalities"]} as a reference. However, ensure that the new questions you generate are more challenging and differ substantially in terms of content, structure, and complexity.
+
+    In cases where the questions involve visual elements such as graphs, charts, or HTML representations:
+
+    - **Unique Visual Data**: Create unique and different visual data for each question, ensuring no repetition from the sample questions.
+    - **Consistency**: Ensure that the visual data is consistent with the question text and the correct answer.
+    - **Clarity and Relevance**: The visual elements should be clear, relevant to the question, and should add value to the understanding or solving of the problem.
+
+    The goal is to create a diverse set of challenging questions that thoroughly test the understanding of "Solving linear equations and linear inequalities" while providing educational value and variety in presentation and difficulty.`;
 
     const assistant_content_1 = JSON.stringify(dataDictTemplate, null, 4);
 
-    const user_content2 = `Given the category: ${mathTopic}, generate a suite of ${questionCount} SAT Math questions as well as 4 answer choices for each question. Return the questions,
-    their answer choices, the correct answer choice, a brief rationale for the correct answer, and an estimated difficulty score for each question. 
-    The following represents a list of sample questions from the above category that you can use to generate new questions from: ${topicMapper[mathTopic][mathSubTopic]}. Make the questions significantly harder than the list of sample questions.
-    If the questions include visual data such as HTML or points, ensure that the new questions generated differ in terms of content and data points for the visual. `
+    const user_content2 = `Given the category: ${"Scatterplots"}, generate a suite of ${11} SAT Math questions focused on scatterplots, along with 4 answer choices for each question. Each question should include:
 
+    1. **question**: Clearly state the problem to be solved.
+    2. **options**: Offer four distinct answer options.
+    3. **correct_answer**: Identify the correct option.
+    4. **whyCorrectAnswer**: Give a brief explanation for why the correct answer is the best choice.
+    5. **difficulty**: Assign an estimated difficulty level to each question, making sure they are significantly harder than the examples.
+    6. **includesVisual** Assign an boolean to each question whether it contains a visual. 
+    7. **visualData** Indicate metadata for the visualContent only if the question includes a visual
+
+    Use the sample questions in JSON format from ${problemSolvingAndDataAnalysisMapper["Scatterplots"]} as a base, but create more challenging questions. Ensure that the new questions are distinct in content yet test the same concepts as the original questions.
+
+    For each scatterplot question, generate a set of 10-15 data points. These points should be consistent with the trend line, which means:
+
+    Trend Line Specification: Clearly define a trend line for each scatterplot question.
+
+    Data point generation: Generate data points by plugging in a range of x-values into the trend line equation to calculate corresponding y-values. Choose x-values that span a reasonable range relevant to the context of the question.
+    Ensure that the data points are spread across the entire length of the trend line to provide a comprehensive representation of the trend.
+
+    Variance Guidelines: Introduce a realistic degree of variance in the data points. This means that while the points should generally follow the trend line, they should not all lie exactly on it.
+    Implement a method to vary each point slightly from the trend line. For instance, add or subtract a small, randomly chosen value (within a specified range) to the y-value of each point. This deviation should be minor enough to maintain the overall trend, but noticeable enough to reflect real-world data variability.
+
+    Visualization and Consistency: When visualizing these data points on a scatterplot, ensure that the graphical representation is consistent with the generated data. The trend line should be clearly marked, and the data points should visually align with the described variance.
+    Contextual Relevance:
+
+    Make sure that the trend line and data points are contextually relevant to the question being posed. The range of values and the nature of the variance should make sense within the scenario presented in the question.
+    `;
+
+    const assistant_content_2 = JSON.stringify(scatterPlotDataDictTemplate, null, 4);
+
+    const user_content3 = `Given the category: ${"Table Data"}, generate a suite of 11 SAT Math questions, each with 4 answer choices. For each question, provide:
+
+    1. **question**: Clearly state the problem to be solved.
+    2. **options**: Offer four distinct answer options.
+    3. **correct_answer**: Identify the correct option.
+    4. **whyCorrectAnswer**: Give a brief explanation for why the correct answer is the best choice.
+    5. **difficulty**: Assign an estimated difficulty level to each question, making sure they are significantly harder than the examples.
+    6. **includesVisual** Assign an boolean to each question whether it contains a visual. 
+    7. **visualData** Indicate metadata for the visualContent only if the question includes a visual
+
+    Use the sample questions from the category ${"Table Data"} available in ${problemSolvingAndDataAnalysisMapper["Table Data"]} as a reference. However, ensure that the new questions you generate are more challenging and differ substantially in terms of content, structure, and complexity.
+
+    In cases where the questions involve visual elements such as graphs, charts, or HTML representations:
+
+    - **Unique Visual Data**: Create unique and different visual data for each question, ensuring no repetition from the sample questions.
+    - **Consistency**: Ensure that the visual data is consistent with the question text and the correct answer.
+    - **Clarity and Relevance**: The visual elements should be clear, relevant to the question, and should add value to the understanding or solving of the problem.
+
+    The goal is to create a diverse set of challenging questions that thoroughly test the understanding of ${"Table Data"} while providing educational value and variety in presentation and difficulty.`;
+
+    const assistant_content_3 = JSON.stringify(tableDataDictTemplate, null, 4);
+
+    let user_content4 = `Given the category: ${mathSubTopic}, generate a suite of 11 SAT Math questions, each with 4 answer choices. For each question, provide:
+
+    1. **question**: Clearly state the problem to be solved.
+    2. **options**: Offer four distinct answer options.
+    3. **correct_answer**: Identify the correct option.
+    4. **whyCorrectAnswer**: Give a brief explanation for why the correct answer is the best choice.
+    5. **difficulty**: Assign an estimated difficulty level to each question, making sure they are significantly harder than the examples.
+    6. **includesVisual** Assign an boolean to each question whether it contains a visual. 
+    7. **visualData** Indicate metadata for the visualContent only if the question includes a visual
+
+    Use the sample questions from the category ${mathSubTopic} available in ${topicMapper[mathTopic][mathSubTopic]} as a reference. However, ensure that the new questions you generate are more challenging and differ substantially in terms of content, structure, and complexity.
+
+    In cases where the questions involve visual elements such as graphs, charts, or HTML representations:
+
+    - **Unique Visual Data**: Create unique and different visual data for each question, ensuring no repetition from the sample questions.
+    - **Consistency**: Ensure that the visual data is consistent with the question text and the correct answer.
+    - **Clarity and Relevance**: The visual elements should be clear, relevant to the question, and should add value to the understanding or solving of the problem.
+
+    The goal is to create a diverse set of challenging questions that thoroughly test the understanding of ${mathSubTopic} while providing educational value and variety in presentation and difficulty.`;
+
+    if (mathSubTopic === 'Scatterplots') {
+        user_content4 = `Given the category: ${mathSubTopic}, generate a suite of ${questionCount} SAT Math questions focused on scatterplots, along with 4 answer choices for each question. Each question should include:
+
+        1. **question**: Clearly state the problem to be solved.
+        2. **options**: Offer four distinct answer options.
+        3. **correct_answer**: Identify the correct option.
+        4. **whyCorrectAnswer**: Give a brief explanation for why the correct answer is the best choice.
+        5. **difficulty**: Assign an estimated difficulty level to each question, making sure they are significantly harder than the examples.
+        6. **includesVisual** Assign an boolean to each question whether it contains a visual. 
+        7. **visualData** Indicate metadata for the visualContent only if the question includes a visual
+
+            Use the sample questions in JSON format from ${topicMapper[mathTopic][mathSubTopic]} as a base, but create more challenging questions. Ensure that the new questions are distinct in content yet test the same concepts as the original questions.
+
+            For each scatterplot question, generate a set of 10-15 data points. These points should be consistent with the trend line, which means:
+
+    Trend Line Specification: Clearly define a trend line for each scatterplot question.
+
+    Data point generation: Generate data points by plugging in a range of x-values into the trend line equation to calculate corresponding y-values. Choose x-values that span a reasonable range relevant to the context of the question.
+    Ensure that the data points are spread across the entire length of the trend line to provide a comprehensive representation of the trend.
+
+    Variance Guidelines: Introduce a realistic degree of variance in the data points. This means that while the points should generally follow the trend line, they should not all lie exactly on it.
+    Implement a method to vary each point slightly from the trend line. For instance, add or subtract a small, randomly chosen value (within a specified range) to the y-value of each point. This deviation should be minor enough to maintain the overall trend, but noticeable enough to reflect real-world data variability.
+    
+    Visualization and Consistency: When visualizing these data points on a scatterplot, ensure that the graphical representation is consistent with the generated data. The trend line should be clearly marked, and the data points should visually align with the described variance.
+    Contextual Relevance:
+
+    Make sure that the trend line and data points are contextually relevant to the question being posed. The range of values and the nature of the variance should make sense within the scenario presented in the question.          `;
+    }
 
     try {
         console.log("Generating Math questions...");
@@ -509,10 +1323,13 @@ export async function generateMathQuestions(questionCount, mathTopic, mathSubTop
                 { "role": "system", "content": system_msg },
                 { "role": "user", "content": user_content1 },
                 { "role": "assistant", "content": assistant_content_1 },
-                { "role": "user", "content": user_content2 }
+                { "role": "user", "content": user_content2 },
+                { "role": "assistant", "content": assistant_content_2 },
+                { "role": "user", "content": user_content3 },
+                { "role": "assistant", "content": assistant_content_3 },
+                { "role": "user", "content": user_content4 }
             ]
         });
-
 
         const stream = OpenAIStream(response);
 

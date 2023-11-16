@@ -58,8 +58,6 @@ export default async function handler(req, res) {
       try {
         // Call the generateQuestions function to get a StreamingTextResponse
         const streamingResponse = await generateMathQuestions(questionCount, questionSubCategory, mathSubTopic);
-
-
         let chunks = '';
         const reader = streamingResponse.body.getReader();
         const readNextChunk = async () => {
@@ -67,7 +65,7 @@ export default async function handler(req, res) {
           if (done) {
             try {
               result = JSON.parse(chunks);
-              console.log(result)
+              console.log(JSON.stringify(result))
             } catch (error) {
               console.error('Failed to parse JSON', error);
               return res.status(500).json({ message: 'Failed to parse response.' });

@@ -1,6 +1,14 @@
 import puppeteer from 'puppeteer';
+import { plotScatterPlot } from './plotScatterPlot';
 
 export async function generatePdf(content, questions, subject) {
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+    ]
+  });
   const passageLines = content.split(/(?=\(\d+\))/);
 
   let htmlContent = `
@@ -35,9 +43,9 @@ export async function generatePdf(content, questions, subject) {
       <div class="page-break"></div>
   `;
 
-  questions.forEach((question, index) => {
+  questions.forEach(async (question, index) => {
     let tableContent = '';
-    if (question.includesVisual && question.visualData.html) {
+    if (question.includesVisual && question.visualData?.html) {
       tableContent = `
       <div class="visual" style="margin-bottom: 20px;">
         ${question.visualData.html.replace('<table>', '<table style="width: 100%; border-collapse: collapse; border: 1px solid black;">')
@@ -46,8 +54,15 @@ export async function generatePdf(content, questions, subject) {
       </div>`;
     }
 
+    let scatterplotContent = '';
+    if (question.includesVisual && question.visualData.scatterplot) {
+      scatterplotContent = await plotScatterPlot(question.visualData.scatterplot, question.id);
+    }
+
+    // TODO: Clean this Up later
     htmlContent += `
       ${tableContent}
+      ${scatterplotContent}
         <div class="question">
           <b>Q${index + 1}: ${question.question}</b>
           <ul>
@@ -60,14 +75,6 @@ export async function generatePdf(content, questions, subject) {
   });
 
   htmlContent += `</div>`;
-
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-    ]
-  });
   const page = await browser.newPage();
 
   await page.setContent(htmlContent);
